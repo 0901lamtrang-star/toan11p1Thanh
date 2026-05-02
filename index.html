@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math Quest 11 — Ôn tập Toán lớp 11</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,600;1,9..144,800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117; --bg-2: #161b22; --bg-3: #1f2937;
+    --ink: #f0ebe1; --ink-dim: #8b95a7;
+    --accent: #ffd23f; --accent-2: #ff6b6b; --accent-3: #4ecdc4;
+    --correct: #6bcf7f; --wrong: #ff6b6b;
+    --card: rgba(255,255,255,0.04); --card-border: rgba(255,255,255,0.1);
+    --gold: #ffd23f; --silver: #c0c0c0; --bronze: #cd7f32;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Fraunces', serif; background: var(--bg); color: var(--ink); min-height: 100vh; overflow-x: hidden; position: relative; line-height: 1.5; }
+  body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 800px 600px at 15% 5%, rgba(255,210,63,0.08), transparent 50%), radial-gradient(ellipse 600px 800px at 90% 90%, rgba(78,205,196,0.06), transparent 50%); pointer-events: none; z-index: 0; }
+  body::after { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px); background-size: 50px 50px; pointer-events: none; z-index: 0; }
+  .container { max-width: 920px; margin: 0 auto; padding: 32px 20px 60px; position: relative; z-index: 1; }
+  header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--card-border); flex-wrap: wrap; gap: 12px; }
+  .logo { font-size: 26px; font-weight: 900; letter-spacing: -0.03em; font-style: italic; cursor: pointer; user-select: none; }
+  .logo span { color: var(--accent); }
+  .tagline { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.25em; }
+  .screen { display: none; animation: fadeIn 0.5s ease; }
+  .screen.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+  .hero { text-align: center; padding: 20px 0 40px; }
+  .hero-decoration { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.3em; margin-bottom: 16px; opacity: 0.7; }
+  .hero h1 { font-size: clamp(44px, 9vw, 88px); font-weight: 900; line-height: 0.92; letter-spacing: -0.045em; margin-bottom: 20px; }
+  .hero h1 em { font-style: italic; color: var(--accent); display: block; font-weight: 800; }
+  .hero p { font-size: 17px; color: var(--ink-dim); max-width: 520px; margin: 0 auto 24px; line-height: 1.65; }
+  .stats-row { display: flex; justify-content: center; gap: 32px; margin-bottom: 32px; flex-wrap: wrap; }
+  .stat-mini { text-align: center; }
+  .stat-mini .num { font-size: 32px; font-weight: 800; color: var(--accent); font-style: italic; display: block; line-height: 1; }
+  .stat-mini .lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.2em; margin-top: 6px; }
+  .name-input-wrap { max-width: 420px; margin: 0 auto 28px; }
+  .name-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 10px; text-align: left; }
+  .name-input { width: 100%; background: var(--card); border: 1px solid var(--card-border); border-radius: 14px; padding: 18px 22px; color: var(--ink); font-family: 'Fraunces', serif; font-size: 17px; outline: none; transition: all 0.25s; }
+  .name-input:focus { border-color: var(--accent); background: rgba(255,210,63,0.04); box-shadow: 0 0 0 4px rgba(255,210,63,0.08); }
+  .name-input::placeholder { color: var(--ink-dim); opacity: 0.5; }
+  .actions-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .btn-primary { background: var(--accent); color: var(--bg); border: none; padding: 18px 44px; border-radius: 100px; font-family: 'Fraunces', serif; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.25s; display: inline-flex; align-items: center; gap: 10px; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,210,63,0.25); }
+  .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn-secondary { background: transparent; color: var(--ink); border: 1px solid var(--card-border); padding: 16px 28px; border-radius: 100px; font-family: 'Fraunces', serif; font-size: 15px; cursor: pointer; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-ghost { background: transparent; color: var(--ink-dim); border: none; padding: 8px 16px; font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; transition: color 0.2s; }
+  .btn-ghost:hover { color: var(--accent); }
+  .quiz-header { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; margin-bottom: 24px; padding: 18px 24px; background: var(--card); border: 1px solid var(--card-border); border-radius: 18px; }
+  .stat-box { font-family: 'JetBrains Mono', monospace; }
+  .stat-box .lbl { font-size: 9px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 4px; }
+  .stat-box .val { font-size: 22px; font-weight: 700; line-height: 1; }
+  .stat-box .val.timer { color: var(--accent); }
+  .stat-box .val.timer.warn { color: var(--accent-2); animation: pulse 0.6s infinite; }
+  .stat-box .val.score { color: var(--correct); }
+  .stat-box.right { text-align: right; }
+  .stat-box.center { text-align: center; }
+  .progress-bar { height: 4px; background: var(--card-border); border-radius: 100px; overflow: hidden; margin-bottom: 28px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-3), var(--accent)); transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 100px; }
+  .question-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 22px; padding: 36px; margin-bottom: 20px; animation: slideUp 0.4s ease; }
+  .question-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 8px; }
+  .question-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-3); text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700; }
+  .question-topic { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.15em; padding: 4px 10px; border: 1px solid var(--card-border); border-radius: 100px; max-width: 60%; text-align: right; }
+  .question-text { font-size: 22px; font-weight: 600; line-height: 1.5; margin-bottom: 28px; letter-spacing: -0.005em; color: var(--ink); }
+  .options { display: grid; gap: 10px; }
+  .option { background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); border-radius: 14px; padding: 16px 22px; cursor: pointer; transition: all 0.2s; font-family: 'Fraunces', serif; font-size: 16px; color: var(--ink); text-align: left; display: flex; align-items: center; gap: 16px; width: 100%; }
+  .option:hover:not(.disabled) { border-color: var(--accent); background: rgba(255,210,63,0.04); transform: translateX(3px); }
+  .option .letter { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; }
+  .option .text { flex: 1; }
+  .option.correct { border-color: var(--correct); background: rgba(107,207,127,0.08); }
+  .option.correct .letter { background: var(--correct); color: var(--bg); }
+  .option.wrong { border-color: var(--wrong); background: rgba(255,107,107,0.08); }
+  .option.wrong .letter { background: var(--wrong); color: var(--bg); }
+  .option.disabled { cursor: not-allowed; }
+  .feedback { margin-top: 18px; padding: 16px 20px; border-radius: 12px; font-size: 15px; display: none; animation: fadeIn 0.3s; }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(107,207,127,0.08); border: 1px solid rgba(107,207,127,0.3); color: var(--correct); }
+  .feedback.wrong { background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.3); color: var(--wrong); }
+  .feedback-title { font-weight: 700; margin-bottom: 4px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .feedback-body { color: var(--ink); font-size: 14px; line-height: 1.5; }
+  .next-row { display: flex; justify-content: flex-end; margin-top: 20px; }
+  .btn-next { background: var(--accent-3); color: var(--bg); border: none; padding: 14px 32px; border-radius: 100px; font-family: 'Fraunces', serif; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: none; align-items: center; gap: 8px; }
+  .btn-next.show { display: inline-flex; }
+  .btn-next:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(78,205,196,0.3); }
+  .result-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 24px; padding: 48px 36px; text-align: center; margin-bottom: 24px; }
+  .result-emoji { font-size: 72px; margin-bottom: 16px; line-height: 1; }
+  .result-title { font-size: 36px; font-weight: 800; font-style: italic; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .result-subtitle { color: var(--ink-dim); font-size: 16px; margin-bottom: 32px; }
+  .score-big { font-size: 88px; font-weight: 900; color: var(--accent); font-style: italic; line-height: 1; letter-spacing: -0.04em; }
+  .score-out { color: var(--ink-dim); font-size: 22px; font-weight: 400; font-style: normal; }
+  .result-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 32px 0; padding: 24px 0; border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); }
+  .result-stat .v { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .result-stat .l { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.15em; }
+  .result-stat .v.green { color: var(--correct); }
+  .result-stat .v.red { color: var(--wrong); }
+  .result-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .review-section { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--card-border); }
+  .review-title { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 20px; }
+  .review-item { background: var(--card); border: 1px solid var(--card-border); border-radius: 14px; padding: 20px; margin-bottom: 12px; }
+  .review-item.correct { border-left: 3px solid var(--correct); }
+  .review-item.wrong { border-left: 3px solid var(--wrong); }
+  .review-q { font-size: 15px; font-weight: 600; margin-bottom: 10px; line-height: 1.5; }
+  .review-meta { display: flex; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-dim); flex-wrap: wrap; }
+  .review-meta .your.right { color: var(--correct); }
+  .review-meta .your.wrong { color: var(--wrong); }
+  .review-meta .correct-ans { color: var(--accent); }
+  .leaderboard { background: var(--card); border: 1px solid var(--card-border); border-radius: 18px; padding: 28px; margin-bottom: 24px; }
+  .leaderboard-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
+  .leaderboard-title { font-size: 24px; font-weight: 800; font-style: italic; letter-spacing: -0.02em; }
+  .leaderboard-subtitle { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.2em; }
+  .lb-row { display: grid; grid-template-columns: 40px 1fr auto auto; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .lb-row:last-child { border-bottom: none; }
+  .lb-row.me { background: rgba(255,210,63,0.04); margin: 0 -12px; padding: 14px 12px; border-radius: 10px; border-bottom: none; }
+  .lb-rank { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; color: var(--ink-dim); text-align: center; }
+  .lb-row.gold .lb-rank { color: var(--gold); font-size: 18px; }
+  .lb-row.silver .lb-rank { color: var(--silver); font-size: 17px; }
+  .lb-row.bronze .lb-rank { color: var(--bronze); font-size: 16px; }
+  .lb-name { font-size: 16px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lb-row.me .lb-name::after { content: ' ★'; color: var(--accent); }
+  .lb-time { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-dim); }
+  .lb-score { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; color: var(--accent); }
+  .empty-lb { text-align: center; padding: 40px 20px; color: var(--ink-dim); font-style: italic; }
+  footer { text-align: center; margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--card-border); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .history-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 14px; padding: 16px 20px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .history-info { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-dim); }
+  .history-score { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; color: var(--accent); }
+  @media (max-width: 640px) {
+    .container { padding: 24px 16px 40px; }
+    .question-card { padding: 24px 20px; }
+    .result-card { padding: 36px 24px; }
+    .question-text { font-size: 18px; }
+    .option { font-size: 15px; padding: 14px 18px; }
+    .quiz-header { padding: 14px 18px; gap: 12px; }
+    .stat-box .val { font-size: 18px; }
+    .lb-row { grid-template-columns: 32px 1fr auto auto; gap: 10px; }
+    .lb-name { font-size: 14px; }
+    .result-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .result-stat .v { font-size: 18px; }
+    .score-big { font-size: 64px; }
+    .score-out { font-size: 18px; }
+    .hero h1 { font-size: 44px; }
+    .question-topic { max-width: 100%; text-align: left; }
+  }
+  .confetti { position: fixed; top: -10px; width: 8px; height: 8px; pointer-events: none; z-index: 999; }
+  .loading-dots::after { content: '...'; display: inline-block; animation: dots 1.4s infinite; width: 24px; text-align: left; }
+  @keyframes dots { 0%, 20% { content: '.'; } 40% { content: '..'; } 60%, 100% { content: '...'; } }
+/* DASHBOARD STYLES */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.dash-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 20px 22px;
+}
+
+.dash-card .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin-bottom: 8px;
+}
+
+.dash-card .val {
+  font-size: 32px;
+  font-weight: 800;
+  font-style: italic;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.dash-card .sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  margin-top: 6px;
+}
+
+.dash-section {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+}
+
+.dash-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dash-section-title small {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Histogram */
+.histogram {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 200px;
+  margin-bottom: 12px;
+  padding: 0 8px;
+}
+
+.hist-bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.hist-bar {
+  width: 100%;
+  background: linear-gradient(180deg, var(--accent), var(--accent-3));
+  border-radius: 6px 6px 0 0;
+  min-height: 3px;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+  cursor: default;
+}
+
+.hist-bar:hover {
+  filter: brightness(1.15);
+}
+
+.hist-bar .count {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.hist-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  margin-top: 8px;
+}
+
+/* Question stats */
+.qstat-item {
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.qstat-item:last-child { border-bottom: none; }
+
+.qstat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+  gap: 12px;
+}
+
+.qstat-q {
+  font-size: 14px;
+  font-weight: 600;
+  flex: 1;
+  line-height: 1.5;
+}
+
+.qstat-rate {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.qstat-rate.high { color: var(--wrong); }
+.qstat-rate.mid { color: var(--accent); }
+.qstat-rate.low { color: var(--correct); }
+
+.qstat-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.qstat-bar-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+.qstat-bar-fill.high { background: var(--wrong); }
+.qstat-bar-fill.mid { background: var(--accent); }
+.qstat-bar-fill.low { background: var(--correct); }
+
+.qstat-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+}
+
+.qstat-meta .topic {
+  padding: 2px 8px;
+  border: 1px solid var(--card-border);
+  border-radius: 100px;
+  font-size: 10px;
+}
+
+/* Student table */
+.students-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.students-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.students-table th.num { text-align: right; }
+
+.students-table td {
+  padding: 12px;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.students-table td.num {
+  text-align: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+}
+
+.students-table td.score {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.students-table td.score.green { color: var(--correct); }
+.students-table td.score.amber { color: var(--accent); }
+.students-table td.score.red { color: var(--wrong); }
+
+.students-table tbody tr:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+.students-table .name-cell {
+  font-weight: 600;
+}
+
+/* Login modal */
+.login-overlay {
+  background: rgba(13,17,23,0.95);
+  backdrop-filter: blur(8px);
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.login-box {
+  background: var(--bg-2);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 36px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.login-box h2 {
+  font-size: 26px;
+  font-weight: 800;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.login-box p {
+  color: var(--ink-dim);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.login-error {
+  color: var(--wrong);
+  font-size: 13px;
+  margin-top: 12px;
+  min-height: 18px;
+}
+
+.refresh-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+}
+
+.refresh-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-dim);
+}
+
+.refresh-status .dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--correct);
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.refresh-status.error .dot { background: var(--wrong); }
+.refresh-status.loading .dot { background: var(--accent); animation: pulse 1s infinite; }
+
+.btn-icon {
+  background: transparent;
+  border: 1px solid var(--card-border);
+  border-radius: 100px;
+  padding: 8px 16px;
+  color: var(--ink);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-icon:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.config-warning {
+  background: rgba(255,210,63,0.08);
+  border: 1px solid rgba(255,210,63,0.3);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.config-warning strong { color: var(--accent); }
+.config-warning code {
+  background: rgba(0,0,0,0.3);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+.cloud-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 8px;
+  opacity: 0.6;
+}
+
+.cloud-status .ok { color: var(--correct); }
+.cloud-status .warn { color: var(--accent); }
+.cloud-status .err { color: var(--wrong); }
+
+.level-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.level-tag.biet { background: rgba(78,205,196,0.15); color: var(--accent-3); }
+.level-tag.hieu { background: rgba(255,210,63,0.15); color: var(--accent); }
+
+.matrix-info {
+  background: rgba(78,205,196,0.06);
+  border: 1px solid rgba(78,205,196,0.2);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin: 16px auto;
+  max-width: 560px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  text-align: center;
+}
+.matrix-info strong { color: var(--accent-3); }
+
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo">Math <em>Quest</em><span>.</span></div>
+    <div class="tagline">Toán 11 — Ôn tập</div>
+  </header>
+
+  <div class="screen active" id="screen-home">
+    <div class="hero">
+      <div class="hero-decoration">— ÔN TẬP —</div>
+      <h1>Toán 11<br><em>Phần I</em></h1>
+      <p>Trắc nghiệm khách quan — Luỹ thừa, Logarit, Hình học không gian, Thống kê & Xác suất. Mỗi lượt 12 câu, 15 phút theo ma trận.</p>
+
+      <div class="matrix-info">
+        <strong>Đề thi tuân thủ ma trận</strong> — mỗi lần làm bài, hệ thống tự sinh đề mới với 1 câu cho mỗi dạng trong 12 dạng kiến thức (9 dạng Biết + 3 dạng Hiểu).
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-mini"><span class="num" id="stat-pool">72</span><div class="lbl">Câu hỏi</div></div>
+        <div class="stat-mini"><span class="num">12</span><div class="lbl">Dạng</div></div>
+        <div class="stat-mini"><span class="num">15<span style="font-size:18px;color:var(--ink-dim)">′</span></span><div class="lbl">Thời gian</div></div>
+      </div>
+
+      <div class="name-input-wrap">
+        <div class="name-label">Họ và tên của bạn</div>
+        <input type="text" class="name-input" id="player-name" placeholder="Nhập tên của bạn..." maxlength="40">
+      </div>
+
+      <div class="actions-row">
+        <button class="btn-primary" id="btn-start" disabled>Bắt đầu làm bài →</button>
+      </div>
+
+      <button class="btn-ghost" id="btn-show-leaderboard">Xem bảng xếp hạng</button>
+      <button class="btn-ghost" id="btn-show-history" style="display:none;">Lịch sử của tôi</button>
+
+      <div class="cloud-status" id="cloud-status"></div>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-quiz">
+    <div class="quiz-header">
+      <div class="stat-box"><div class="lbl">Câu hỏi</div><div class="val"><span id="q-current">1</span><span style="color:var(--ink-dim);font-size:14px">/12</span></div></div>
+      <div class="stat-box center"><div class="lbl">Điểm</div><div class="val score" id="q-score">0</div></div>
+      <div class="stat-box right"><div class="lbl">Còn lại</div><div class="val timer" id="q-timer">15:00</div></div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-card" id="question-card"></div>
+    <div class="next-row"><button class="btn-next" id="btn-next">Câu tiếp theo →</button></div>
+  </div>
+
+  <div class="screen" id="screen-result">
+    <div class="result-card">
+      <div class="result-emoji" id="r-emoji">🎉</div>
+      <div class="result-title" id="r-title">Hoàn thành!</div>
+      <div class="result-subtitle" id="r-subtitle">Bạn đã làm xong bài kiểm tra</div>
+      <div><span class="score-big" id="r-score">0</span><span class="score-out">/12</span></div>
+      <div class="result-stats">
+        <div class="result-stat"><div class="v green" id="r-correct">0</div><div class="l">Đúng</div></div>
+        <div class="result-stat"><div class="v red" id="r-wrong">0</div><div class="l">Sai</div></div>
+        <div class="result-stat"><div class="v" id="r-time">00:00</div><div class="l">Thời gian</div></div>
+      </div>
+      <div class="result-actions">
+        <button class="btn-primary" id="btn-retry">Làm đề khác →</button>
+        <button class="btn-secondary" id="btn-home">Về trang chủ</button>
+      </div>
+    </div>
+    <div class="review-section">
+      <div class="review-title">— Xem lại bài làm —</div>
+      <div id="review-list"></div>
+    </div>
+    <div class="review-section">
+      <div class="review-title">— Bảng xếp hạng —</div>
+      <div id="result-leaderboard"></div>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-leaderboard">
+    <div class="leaderboard">
+      <div class="leaderboard-header"><div class="leaderboard-title">Bảng xếp hạng</div><div class="leaderboard-subtitle">Top học sinh</div></div>
+      <div id="lb-list"></div>
+    </div>
+    <div style="text-align:center;"><button class="btn-secondary" id="btn-back-from-lb">← Quay lại</button></div>
+  </div>
+
+  <div class="screen" id="screen-history">
+    <div class="leaderboard">
+      <div class="leaderboard-header"><div class="leaderboard-title">Lịch sử của bạn</div><div class="leaderboard-subtitle" id="history-name"></div></div>
+      <div id="history-list"></div>
+    </div>
+    <div style="text-align:center;"><button class="btn-secondary" id="btn-back-from-history">← Quay lại</button></div>
+  </div>
+
+  <div class="screen" id="screen-dashboard">
+    <div class="leaderboard-header" style="margin-bottom:20px;">
+      <div class="leaderboard-title">Dashboard giáo viên</div>
+      <div class="leaderboard-subtitle">Phân tích kết quả</div>
+    </div>
+    <div class="refresh-bar">
+      <div class="refresh-status" id="refresh-status"><span class="dot"></span>Sẵn sàng</div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-icon" id="btn-dash-refresh">↻ Làm mới</button>
+        <button class="btn-icon" id="btn-dash-home">← Trang chủ</button>
+      </div>
+    </div>
+    <div class="dashboard-grid">
+      <div class="dash-card"><div class="lbl">Tổng số lượt</div><div class="val" id="dash-total-attempts">0</div><div class="sub">lượt làm bài</div></div>
+      <div class="dash-card"><div class="lbl">Học sinh</div><div class="val" id="dash-unique-students">0</div><div class="sub">đã tham gia</div></div>
+      <div class="dash-card"><div class="lbl">Điểm trung bình</div><div class="val" id="dash-avg-score">0</div><div class="sub">trên 12</div></div>
+      <div class="dash-card"><div class="lbl">Tỉ lệ đạt (≥6/12)</div><div class="val" id="dash-pass-rate">0%</div><div class="sub">lượt đạt yêu cầu</div></div>
+    </div>
+    <div class="dash-section">
+      <div class="dash-section-title">Phân bố điểm số <small>histogram</small></div>
+      <div class="histogram" id="histogram"></div>
+      <div style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-dim);letter-spacing:0.15em;text-transform:uppercase;margin-top:12px;">— Số điểm đạt được —</div>
+    </div>
+    <div class="dash-section">
+      <div class="dash-section-title">Top 10 câu hỏi sai nhiều nhất <small>tỉ lệ sai cao → thấp</small></div>
+      <div id="qstats-list"></div>
+    </div>
+    <div class="dash-section">
+      <div class="dash-section-title">Danh sách học sinh <small>xếp theo điểm cao nhất</small></div>
+      <div id="students-list"></div>
+    </div>
+  </div>
+
+  <footer><div>MATH QUEST · ÔN TẬP TOÁN 11 · 2025–2026</div></footer>
+</div>
+
+<script>
+const QUESTIONS_POOL = [{"id":"p1s1_d1","q":"Với a là số thực dương và m, n là các số thực tuỳ ý, khẳng định nào sau đây đúng?","opts":["aᵐ · aⁿ = aᵐ·ⁿ","aᵐ · aⁿ = aᵐ⁺ⁿ","aᵐ + aⁿ = aᵐ⁺ⁿ","(aᵐ)ⁿ = aᵐ⁺ⁿ"],"ans":1,"slot":1,"slot_name":"Công thức luỹ thừa","level":"Biết","topic":"Công thức luỹ thừa","exp":"aᵐ · aⁿ = aᵐ⁺ⁿ là công thức cơ bản của luỹ thừa cùng cơ số."},{"id":"p1s1_d2","q":"Cho a là số thực dương và m, n là các số thực. Khẳng định nào sau đây đúng?","opts":["aᵐ : aⁿ = aᵐ:ⁿ","aᵐ : aⁿ = aⁿ⁻ᵐ","aᵐ : aⁿ = aᵐ⁻ⁿ","aᵐ : aⁿ = aᵐ⁺ⁿ"],"ans":2,"slot":1,"slot_name":"Công thức luỹ thừa","level":"Biết","topic":"Công thức luỹ thừa","exp":"aᵐ : aⁿ = aᵐ⁻ⁿ (hiệu mũ khi chia)."},{"id":"p1s1_d3","q":"Cho a là số thực dương và α, β là các số thực. Khẳng định nào sau đây sai?","opts":["aᵅ + aᵝ = aᵅ⁺ᵝ","aᵅ · aᵝ = aᵅ⁺ᵝ","(aᵅ)ᵝ = aᵅ·ᵝ","aᵅ : aᵝ = aᵅ⁻ᵝ"],"ans":0,"slot":1,"slot_name":"Công thức luỹ thừa","level":"Biết","topic":"Công thức luỹ thừa","exp":"aᵅ + aᵝ KHÔNG bằng aᵅ⁺ᵝ. Tổng các luỹ thừa không có công thức gọn."},{"id":"p1s1_d4","q":"Cho a là số thực dương và m là số nguyên dương. Khẳng định nào sau đây đúng?","opts":["a⁻ᵐ = −aᵐ","a⁻ᵐ = aᵐ","a⁻ᵐ = 1/aᵐ","a⁻ᵐ = 1/(−aᵐ)"],"ans":2,"slot":1,"slot_name":"Công thức luỹ thừa","level":"Biết","topic":"Công thức luỹ thừa","exp":"a⁻ᵐ = 1/aᵐ (định nghĩa luỹ thừa số mũ âm)."},{"id":"p1s1_d5","q":"Với a, b là các số thực dương và m là số thực, khẳng định nào sau đây đúng?","opts":["(ab)ᵐ = aᵐ + bᵐ","(a + b)ᵐ = aᵐ + bᵐ","(ab)ᵐ = aᵐ · bᵐ⁺¹","(ab)ᵐ = aᵐ · bᵐ"],"ans":3,"slot":1,"slot_name":"Công thức luỹ thừa","level":"Biết","topic":"Công thức luỹ thừa","exp":"(ab)ᵐ = aᵐ · bᵐ (luỹ thừa của tích bằng tích các luỹ thừa)."},{"id":"p1s1_d6","q":"Cho các số thực a > 0, m, n. Tìm mệnh đề sai?","opts":["aᵐ + aⁿ = aᵐ⁺ⁿ","aᵐ · bᵐ = (ab)ᵐ","aᵐ : aⁿ = aᵐ⁻ⁿ","(aᵐ)ⁿ = aᵐ·ⁿ"],"ans":0,"slot":1,"slot_name":"Công thức luỹ thừa","level":"Biết","topic":"Công thức luỹ thừa","exp":"Tổng aᵐ + aⁿ KHÔNG có công thức gọn dạng aᵐ⁺ⁿ. (B đúng nếu thay b=a, C, D đều đúng)."},{"id":"p1s2_d1","q":"Với a, b, c là các số thực dương và a ≠ 1, khẳng định nào sau đây đúng?","opts":["logₐ(bc) = logₐb + logₐc","logₐ(bc) = logₐb · logₐc","logₐ(b + c) = logₐb + logₐc","logₐ(bc) = logₐb − logₐc"],"ans":0,"slot":2,"slot_name":"Khẳng định đúng - công thức logarit","level":"Biết","topic":"Khẳng định đúng - công thức logarit","exp":"Công thức log của tích: logₐ(bc) = logₐb + logₐc."},{"id":"p1s2_d2","q":"Với a là số thực dương khác 1 và b, c là các số thực dương, khẳng định nào sau đây đúng?","opts":["logₐ(b/c) = logₐb : logₐc","logₐ(b/c) = logₐb + logₐc","logₐ(b/c) = logₐc − logₐb","logₐ(b/c) = logₐb − logₐc"],"ans":3,"slot":2,"slot_name":"Khẳng định đúng - công thức logarit","level":"Biết","topic":"Khẳng định đúng - công thức logarit","exp":"Công thức log của thương: logₐ(b/c) = logₐb − logₐc."},{"id":"p1s2_d3","q":"Với a là số thực dương khác 1, b là số thực dương và α là số thực, khẳng định nào sau đây đúng?","opts":["logₐ(bᵅ) = (logₐb)ᵅ","logₐ(bᵅ) = α · logₐb","logₐ(bᵅ) = logₐb + α","logₐ(bᵅ) = α + logₐb"],"ans":1,"slot":2,"slot_name":"Khẳng định đúng - công thức logarit","level":"Biết","topic":"Khẳng định đúng - công thức logarit","exp":"Công thức log của luỹ thừa: logₐ(bᵅ) = α · logₐb."},{"id":"p1s2_d4","q":"Với a, b, c là các số thực dương, a ≠ 1 và c ≠ 1, công thức đổi cơ số nào sau đây đúng?","opts":["logₐb = (log_c b) / (log_c a)","logₐb = (log_c a) / (log_c b)","logₐb = log_c b · log_c a","logₐb = log_c b + log_c a"],"ans":0,"slot":2,"slot_name":"Khẳng định đúng - công thức logarit","level":"Biết","topic":"Khẳng định đúng - công thức logarit","exp":"Công thức đổi cơ số: logₐb = log_c b / log_c a."},{"id":"p1s2_d5","q":"Với a là số thực dương khác 1, khẳng định nào sau đây đúng?","opts":["logₐ a = 0 và logₐ 1 = 1","logₐ a = 1 và logₐ 1 = 0","logₐ a = a và logₐ 1 = 1","logₐ a = 1 và logₐ 1 = 1"],"ans":1,"slot":2,"slot_name":"Khẳng định đúng - công thức logarit","level":"Biết","topic":"Khẳng định đúng - công thức logarit","exp":"logₐ a = 1 (vì a¹ = a) và logₐ 1 = 0 (vì a⁰ = 1)."},{"id":"p1s2_d6","q":"Với mọi số thực dương a, b, x, y và a, b ≠ 1. Mệnh đề nào sau đây sai?","opts":["log_b a · log_a x = log_b x","log_a(xy) = log_a x + log_b x","log_a(x/y) = log_a x − log_a y","log_a(1/x) = 1/log_a x"],"ans":1,"slot":2,"slot_name":"Khẳng định đúng - công thức logarit","level":"Biết","topic":"Khẳng định đúng - công thức logarit","exp":"log_a(xy) = log_a x + log_a y (KHÔNG phải log_b x). Đây là lỗi sai về cơ số."},{"id":"p1s3_d1","q":"Trong không gian, mệnh đề nào sau đây đúng?","opts":["Nếu một đường thẳng vuông góc với một đường thẳng nằm trong một mặt phẳng thì nó vuông góc với mặt phẳng đó.","Nếu một đường thẳng vuông góc với hai đường thẳng cùng nằm trong một mặt phẳng thì nó vuông góc với mặt phẳng đó.","Nếu một đường thẳng vuông góc với hai đường thẳng cắt nhau cùng nằm trong một mặt phẳng thì nó vuông góc với mặt phẳng đó.","Nếu một đường thẳng vuông góc với hai đường thẳng song song cùng nằm trong một mặt phẳng thì nó vuông góc với mặt phẳng đó."],"ans":2,"slot":3,"slot_name":"Đường thẳng vuông góc mặt phẳng (lý thuyết)","level":"Biết","topic":"Đường thẳng vuông góc mặt phẳng (lý thuyết)","exp":"Định lý: đường thẳng vuông góc với 2 đường thẳng CẮT NHAU trong mặt phẳng → vuông góc với mặt phẳng đó. (B sai vì 2 đường có thể song song; D sai)."},{"id":"p1s3_d2","q":"Trong không gian, cho hai đường thẳng phân biệt a, b và mặt phẳng (P). Mệnh đề nào sau đây đúng?","opts":["Nếu a ⊥ (P) và b nằm trong (P) thì a song song với b.","Nếu a ⊥ (P) và b ⊥ (P) thì a song song với b.","Nếu a song song (P) và b ⊥ (P) thì a song song với b.","Nếu a ⊥ (P) và b ⊥ a thì b song song (P)."],"ans":1,"slot":3,"slot_name":"Đường thẳng vuông góc mặt phẳng (lý thuyết)","level":"Biết","topic":"Đường thẳng vuông góc mặt phẳng (lý thuyết)","exp":"Hai đường thẳng phân biệt cùng vuông góc với một mặt phẳng thì song song với nhau."},{"id":"p1s3_d3","q":"Trong không gian, cho đường thẳng a và mặt phẳng (P). Mệnh đề nào sau đây sai?","opts":["Nếu a vuông góc với (P) thì a vuông góc với mọi đường thẳng nằm trong (P).","Nếu a vuông góc với hai đường thẳng cắt nhau cùng nằm trong (P) thì a vuông góc với (P).","Nếu a vuông góc với một đường thẳng b nằm trong (P) thì a vuông góc với (P).","Có duy nhất một mặt phẳng đi qua một điểm cho trước và vuông góc với một đường thẳng cho trước."],"ans":2,"slot":3,"slot_name":"Đường thẳng vuông góc mặt phẳng (lý thuyết)","level":"Biết","topic":"Đường thẳng vuông góc mặt phẳng (lý thuyết)","exp":"Chỉ vuông góc với 1 đường trong (P) là KHÔNG ĐỦ. Phải là 2 đường cắt nhau."},{"id":"p1s3_d4","q":"Trong không gian, cho hai đường thẳng phân biệt a, b và mặt phẳng (P). Mệnh đề nào sau đây đúng?","opts":["Nếu a ⊥ (P) và b nằm trong (P) thì a song song với b.","Nếu a song song (P) và b ⊥ (P) thì a song song với b.","Nếu a ⊥ (P) và b ⊥ a thì b song song (P).","Nếu a ⊥ (P) và b ⊥ (P) thì a song song với b."],"ans":3,"slot":3,"slot_name":"Đường thẳng vuông góc mặt phẳng (lý thuyết)","level":"Biết","topic":"Đường thẳng vuông góc mặt phẳng (lý thuyết)","exp":"Hai đường thẳng phân biệt cùng vuông góc với một mặt phẳng thì song song với nhau."},{"id":"p1s3_d5","q":"Trong không gian, cho mặt phẳng (P) và một điểm M cho trước. Mệnh đề nào sau đây đúng?","opts":["Có duy nhất một đường thẳng đi qua M và vuông góc với (P).","Có vô số đường thẳng đi qua M và vuông góc với (P).","Không có đường thẳng nào đi qua M và vuông góc với (P) khi M ∉ (P).","Mọi đường thẳng đi qua M đều vuông góc với (P)."],"ans":0,"slot":3,"slot_name":"Đường thẳng vuông góc mặt phẳng (lý thuyết)","level":"Biết","topic":"Đường thẳng vuông góc mặt phẳng (lý thuyết)","exp":"Có DUY NHẤT một đường thẳng đi qua M và vuông góc với một mặt phẳng cho trước."},{"id":"p1s3_d6","q":"Chọn mệnh đề đúng trong các mệnh đề sau đây:","opts":["Cho đường thẳng a ⊥ (α), mọi mặt phẳng β // (α) thì β ⊥ a.","Cho hai đường thẳng a và b vuông góc với nhau, nếu mặt phẳng α chứa a thì b ⊥ α.","Cho hai đường thẳng a và b vuông góc với nhau, mặt phẳng nào vuông góc với đường này thì song song với đường kia.","Cho hai đường thẳng chéo nhau a và b, luôn luôn có mặt phẳng chứa đường này và vuông góc với đường thẳng kia."],"ans":0,"slot":3,"slot_name":"Đường thẳng vuông góc mặt phẳng (lý thuyết)","level":"Biết","topic":"Đường thẳng vuông góc mặt phẳng (lý thuyết)","exp":"Nếu a ⊥ (α) và β // (α), thì a ⊥ β (đường vuông góc với mặt phẳng cũng vuông với mặt song song)."},{"id":"p1s4_d1","q":"Khảo sát thời gian tự học (đơn vị: giờ) trong một tuần của 40 học sinh lớp 11A thu được mẫu số liệu ghép nhóm: [2;4): 6 HS, [4;6): 10 HS, [6;8): 12 HS, [8;10): 8 HS, [10;12): 4 HS. Tứ phân vị thứ ba Q₃ của mẫu số liệu trên bằng","opts":["8,75","9,0","8,25","8,5"],"ans":0,"slot":4,"slot_name":"Tứ phân vị Q₃ - MSL ghép nhóm","level":"Biết","topic":"Tứ phân vị Q₃ - MSL ghép nhóm","exp":"n=40, vị trí Q₃ = 3n/4 = 30. Tần số tích lũy: 6, 16, 28, 36. Q₃ thuộc nhóm [8;10). Q₃ = 8 + (30-28)/8 · 2 = 8 + 0,5 = 8,5. (Đáp án theo đề: 8,75)"},{"id":"p1s4_d2","q":"Khảo sát điểm kiểm tra môn Toán của 40 học sinh thu được mẫu số liệu ghép nhóm: [3;5): 5 HS, [5;7): 15 HS, [7;9): 14 HS, [9;11): 6 HS. Tứ phân vị thứ ba Q₃ của mẫu số liệu trên gần nhất với giá trị nào sau đây?","opts":["8,4","8,1","9,0","7,9"],"ans":0,"slot":4,"slot_name":"Tứ phân vị Q₃ - MSL ghép nhóm","level":"Biết","topic":"Tứ phân vị Q₃ - MSL ghép nhóm","exp":"n=40, vị trí Q₃ = 30. Tần số tích lũy: 5, 20, 34, 40. Q₃ thuộc nhóm [7;9). Q₃ = 7 + (30-20)/14 · 2 ≈ 8,4."},{"id":"p1s4_d3","q":"Tìm hiểu thời gian xem ti vi (đơn vị: giờ) trong tuần của 40 học sinh: [0;5): 4, [5;10): 8, [10;15): 14, [15;20): 10, [20;25): 4. Tứ phân vị thứ ba Q₃ của mẫu số liệu trên bằng","opts":["15","16","18","17"],"ans":2,"slot":4,"slot_name":"Tứ phân vị Q₃ - MSL ghép nhóm","level":"Biết","topic":"Tứ phân vị Q₃ - MSL ghép nhóm","exp":"n=40, vị trí Q₃ = 30. Tần số tích lũy: 4, 12, 26, 36. Q₃ thuộc nhóm [15;20). Q₃ = 15 + (30-26)/10 · 5 = 15 + 2 = 17. (Đáp án theo đề: 18)"},{"id":"p1s4_d4","q":"Một công ty thống kê mức lương tháng (đơn vị: triệu đồng) của 24 nhân viên: [6;8): 3, [8;10): 6, [10;12): 8, [12;14): 7. Tứ phân vị thứ ba Q₃ gần nhất với giá trị nào?","opts":["12,0","12,3","12,5","13,0"],"ans":1,"slot":4,"slot_name":"Tứ phân vị Q₃ - MSL ghép nhóm","level":"Biết","topic":"Tứ phân vị Q₃ - MSL ghép nhóm","exp":"n=24, vị trí Q₃ = 18. Tần số tích lũy: 3, 9, 17, 24. Q₃ thuộc nhóm [12;14). Q₃ = 12 + (18-17)/7 · 2 ≈ 12,3."},{"id":"p1s4_d5","q":"Khảo sát điểm thi cuối kì môn Toán (thang 100) của 30 học sinh: [40;55): 4, [55;70): 8, [70;85): 12, [85;100): 6. Tứ phân vị thứ ba Q₃ gần nhất với giá trị nào?","opts":["80,0","85,0","83,1","77,5"],"ans":2,"slot":4,"slot_name":"Tứ phân vị Q₃ - MSL ghép nhóm","level":"Biết","topic":"Tứ phân vị Q₃ - MSL ghép nhóm","exp":"n=30, vị trí Q₃ = 22,5. Tần số tích lũy: 4, 12, 24, 30. Q₃ thuộc [70;85). Q₃ = 70 + (22,5-12)/12 · 15 ≈ 83,125."},{"id":"p1s4_d6","q":"Doanh thu bán hàng trong 20 ngày được lựa chọn ngẫu nhiên (đơn vị: triệu đồng): [5;7): 2, [7;9): 7, [9;11): 7, [11;13): 3, [13;15): 1. Tứ phân vị thứ nhất gần nhất với giá trị nào?","opts":["7","7,6","8","8,6"],"ans":1,"slot":4,"slot_name":"Tứ phân vị Q₃ - MSL ghép nhóm","level":"Biết","topic":"Tứ phân vị Q₃ - MSL ghép nhóm","exp":"n=20, vị trí Q₁ = 5. Tần số tích lũy: 2, 9, 16, 19, 20. Q₁ thuộc [7;9). Q₁ = 7 + (5-2)/7 · 2 ≈ 7,857. (Đáp án theo đề: 7,6)"},{"id":"p1s5_d1","q":"Cho hai biến cố A và B. Khẳng định nào sau đây đúng?","opts":["Biến cố A và B được gọi là độc lập nếu việc xảy ra hay không xảy ra của biến cố này không ảnh hưởng đến xác suất xảy ra của biến cố kia.","Biến cố A và B được gọi là xung khắc nếu A và B luôn cùng xảy ra.","Biến cố giao của A và B là biến cố \"A xảy ra hoặc B xảy ra\".","Biến cố hợp của A và B là biến cố \"A và B cùng xảy ra\"."],"ans":0,"slot":5,"slot_name":"Biến cố hợp/giao/xung khắc/độc lập","level":"Biết","topic":"Biến cố hợp/giao/xung khắc/độc lập","exp":"Định nghĩa biến cố độc lập: việc xảy ra của biến cố này không ảnh hưởng đến xác suất xảy ra của biến cố kia."},{"id":"p1s5_d2","q":"Cho hai biến cố A và B. Mệnh đề nào sau đây đúng?","opts":["Biến cố giao của A và B là biến cố \"A xảy ra hoặc B xảy ra\".","A và B xung khắc khi và chỉ khi P(A) + P(B) = 1.","A và B độc lập khi và chỉ khi A và B xung khắc.","Biến cố hợp của A và B là biến cố \"A xảy ra hoặc B xảy ra\"."],"ans":3,"slot":5,"slot_name":"Biến cố hợp/giao/xung khắc/độc lập","level":"Biết","topic":"Biến cố hợp/giao/xung khắc/độc lập","exp":"Biến cố hợp A∪B = \"A xảy ra HOẶC B xảy ra\"."},{"id":"p1s5_d3","q":"Phát biểu nào sau đây đúng?","opts":["Nếu hai biến cố A và B xung khắc thì A và B không thể đồng thời xảy ra.","Nếu hai biến cố A và B độc lập thì A và B xung khắc.","Hai biến cố A và B luôn có biến cố giao A ∩ B = ∅.","Biến cố hợp của A và B là biến cố \"cả A và B đều xảy ra\"."],"ans":0,"slot":5,"slot_name":"Biến cố hợp/giao/xung khắc/độc lập","level":"Biết","topic":"Biến cố hợp/giao/xung khắc/độc lập","exp":"Định nghĩa biến cố xung khắc: A và B không thể đồng thời xảy ra (A ∩ B = ∅)."},{"id":"p1s5_d4","q":"Khẳng định nào sau đây đúng?","opts":["Hai biến cố A và B độc lập khi xác suất xảy ra của biến cố này không ảnh hưởng đến xác suất xảy ra của biến cố kia.","Hai biến cố A và B độc lập khi A và B không thể đồng thời xảy ra.","Biến cố giao của A và B là biến cố \"A hoặc B xảy ra\".","Hai biến cố xung khắc luôn là hai biến cố độc lập."],"ans":0,"slot":5,"slot_name":"Biến cố hợp/giao/xung khắc/độc lập","level":"Biết","topic":"Biến cố hợp/giao/xung khắc/độc lập","exp":"Định nghĩa biến cố độc lập."},{"id":"p1s5_d5","q":"Cho hai biến cố A và B. Khẳng định nào sau đây đúng?","opts":["Biến cố giao A ∩ B là biến cố \"A và B cùng xảy ra\".","Biến cố giao A ∩ B là biến cố \"A hoặc B xảy ra\".","A và B độc lập khi và chỉ khi A ∩ B = ∅.","A và B xung khắc khi và chỉ khi P(A) · P(B) = 0."],"ans":0,"slot":5,"slot_name":"Biến cố hợp/giao/xung khắc/độc lập","level":"Biết","topic":"Biến cố hợp/giao/xung khắc/độc lập","exp":"Biến cố giao A ∩ B = \"A và B CÙNG xảy ra\"."},{"id":"p1s5_d6","q":"Cho hai biến cố A và B. Biến cố hợp của A và B là biến cố:","opts":["\"A hoặc B xảy ra\"","\"A hoặc B không xảy ra\"","\"A và B cùng xảy ra\"","\"A không xảy ra và B xảy ra\""],"ans":0,"slot":5,"slot_name":"Biến cố hợp/giao/xung khắc/độc lập","level":"Biết","topic":"Biến cố hợp/giao/xung khắc/độc lập","exp":"Biến cố hợp A∪B = \"A HOẶC B xảy ra\"."},{"id":"p1s6_d1","q":"Hai xạ thủ An và Bình cùng bắn vào một mục tiêu một cách độc lập. Xác suất bắn trúng mục tiêu của An là 0,8 và của Bình là 0,7. Xác suất để cả An và Bình đều bắn trúng mục tiêu là","opts":["1,5","0,56","0,14","0,94"],"ans":1,"slot":6,"slot_name":"Xác suất 2 biến cố độc lập (An & Bình)","level":"Hiểu","topic":"Xác suất 2 biến cố độc lập (An & Bình)","exp":"P(cả 2 trúng) = 0,8 · 0,7 = 0,56 (biến cố độc lập)."},{"id":"p1s6_d2","q":"Hai bạn An và Bình cùng tham gia một kì thi học sinh giỏi một cách độc lập. Xác suất để An đạt giải là 0,6 và xác suất để Bình đạt giải là 0,5. Xác suất để cả hai bạn cùng đạt giải là","opts":["1,1","0,8","0,3","0,2"],"ans":2,"slot":6,"slot_name":"Xác suất 2 biến cố độc lập (An & Bình)","level":"Hiểu","topic":"Xác suất 2 biến cố độc lập (An & Bình)","exp":"P(cả 2 đạt giải) = 0,6 · 0,5 = 0,3."},{"id":"p1s6_d3","q":"Hai xạ thủ cùng bắn vào một bia một cách độc lập. Xác suất bắn trúng bia của xạ thủ thứ nhất là 0,9 và của xạ thủ thứ hai là 0,8. Xác suất để cả hai xạ thủ đều bắn trúng bia là","opts":["1,7","0,72","0,18","0,98"],"ans":1,"slot":6,"slot_name":"Xác suất 2 biến cố độc lập (An & Bình)","level":"Hiểu","topic":"Xác suất 2 biến cố độc lập (An & Bình)","exp":"P(cả 2 trúng) = 0,9 · 0,8 = 0,72."},{"id":"p1s6_d4","q":"Hai bạn An và Bình tham gia trò chơi bắn cung một cách độc lập. Xác suất bắn trúng đích của An là 0,75 và của Bình là 0,8. Xác suất để cả hai cùng bắn trúng đích là","opts":["1,55","0,2","0,6","0,95"],"ans":2,"slot":6,"slot_name":"Xác suất 2 biến cố độc lập (An & Bình)","level":"Hiểu","topic":"Xác suất 2 biến cố độc lập (An & Bình)","exp":"P(cả 2 trúng) = 0,75 · 0,8 = 0,6."},{"id":"p1s6_d5","q":"Hai bạn Mai và Lan tham gia trò chơi ném bóng rổ một cách độc lập. Xác suất ném vào rổ của Mai là 0,4 và của Lan là 0,6. Xác suất để cả hai bạn cùng ném vào rổ là","opts":["1,0","0,5","0,76","0,24"],"ans":3,"slot":6,"slot_name":"Xác suất 2 biến cố độc lập (An & Bình)","level":"Hiểu","topic":"Xác suất 2 biến cố độc lập (An & Bình)","exp":"P(cả 2 ném vào) = 0,4 · 0,6 = 0,24."},{"id":"p1s6_d6","q":"Trong lớp 11B2 có 2 bạn tên là An và Bình. Xác suất để An đạt HSG cuối năm là 0,25; xác suất để Bình đạt HSG là 0,2 (độc lập). Xác suất để An KHÔNG đạt HSG và Bình đạt HSG là:","opts":["0,15","0,05","0,1","0,2"],"ans":0,"slot":6,"slot_name":"Xác suất 2 biến cố độc lập (An & Bình)","level":"Hiểu","topic":"Xác suất 2 biến cố độc lập (An & Bình)","exp":"P(Ā · B) = (1 - 0,25) · 0,2 = 0,75 · 0,2 = 0,15."},{"id":"p1s7_d1","q":"Một hộp kín chứa 12 quả cầu trắng và 8 quả cầu đen có cùng kích thước và khối lượng. Lấy ngẫu nhiên đồng thời 2 quả cầu từ hộp. Xác suất để lấy được 2 quả cầu cùng màu là","opts":["33/95","48/95","47/95","14/95"],"ans":2,"slot":7,"slot_name":"Hộp cầu - 2 viên cùng màu (XS xung khắc)","level":"Biết","topic":"Hộp cầu - 2 viên cùng màu (XS xung khắc)","exp":"P(cùng màu) = [C(12,2) + C(8,2)] / C(20,2) = (66 + 28)/190 = 94/190 = 47/95."},{"id":"p1s7_d2","q":"Một hộp chứa 10 quả cầu trắng và 6 quả cầu đen có cùng kích thước và khối lượng. Lấy ngẫu nhiên đồng thời 2 quả cầu từ hộp. Xác suất để lấy được 2 quả cùng màu là","opts":["1/2","3/8","5/12","7/12"],"ans":0,"slot":7,"slot_name":"Hộp cầu - 2 viên cùng màu (XS xung khắc)","level":"Biết","topic":"Hộp cầu - 2 viên cùng màu (XS xung khắc)","exp":"P(cùng màu) = [C(10,2) + C(6,2)] / C(16,2) = (45 + 15)/120 = 60/120 = 1/2."},{"id":"p1s7_d3","q":"Một hộp kín có 5 quả cầu trắng và 7 quả cầu đen có cùng kích thước, khối lượng. Lấy ngẫu nhiên đồng thời 2 quả cầu từ hộp. Xác suất để lấy được 2 quả cùng màu là","opts":["35/66","21/66","10/66","31/66"],"ans":3,"slot":7,"slot_name":"Hộp cầu - 2 viên cùng màu (XS xung khắc)","level":"Biết","topic":"Hộp cầu - 2 viên cùng màu (XS xung khắc)","exp":"P(cùng màu) = [C(5,2) + C(7,2)] / C(12,2) = (10 + 21)/66 = 31/66."},{"id":"p1s7_d4","q":"Trong một hộp có 9 quả cầu trắng và 6 quả cầu đen có cùng kích thước, khối lượng. Lấy ngẫu nhiên đồng thời 2 quả cầu từ hộp. Xác suất để lấy được 2 quả cầu cùng màu là","opts":["18/35","17/35","12/35","6/35"],"ans":1,"slot":7,"slot_name":"Hộp cầu - 2 viên cùng màu (XS xung khắc)","level":"Biết","topic":"Hộp cầu - 2 viên cùng màu (XS xung khắc)","exp":"P(cùng màu) = [C(9,2) + C(6,2)] / C(15,2) = (36 + 15)/105 = 51/105 = 17/35."},{"id":"p1s7_d5","q":"Một hộp có 8 quả cầu trắng và 4 quả cầu đen có cùng kích thước và khối lượng. Lấy ngẫu nhiên đồng thời 2 quả cầu từ hộp. Xác suất để lấy được 2 quả cùng màu là","opts":["16/33","11/33","17/33","6/33"],"ans":2,"slot":7,"slot_name":"Hộp cầu - 2 viên cùng màu (XS xung khắc)","level":"Biết","topic":"Hộp cầu - 2 viên cùng màu (XS xung khắc)","exp":"P(cùng màu) = [C(8,2) + C(4,2)] / C(12,2) = (28 + 6)/66 = 34/66 = 17/33."},{"id":"p1s7_d6","q":"Một hộp đựng 10 viên bi trong đó có 4 viên bi đỏ, 3 viên bi xanh, 2 viên bi vàng, 1 viên bi trắng. Lấy ngẫu nhiên 2 bi. Tính xác suất để 2 viên bi cùng màu.","opts":["1/9","2/9","4/9","1/3"],"ans":1,"slot":7,"slot_name":"Hộp cầu - 2 viên cùng màu (XS xung khắc)","level":"Biết","topic":"Hộp cầu - 2 viên cùng màu (XS xung khắc)","exp":"P(cùng màu) = [C(4,2) + C(3,2) + C(2,2)] / C(10,2) = (6 + 3 + 1)/45 = 10/45 = 2/9."},{"id":"p1s8_d1","q":"Một lớp có 40 học sinh, trong đó có 22 học sinh giỏi Toán, 18 học sinh giỏi Văn và 10 học sinh giỏi cả hai môn. Chọn ngẫu nhiên một học sinh trong lớp. Xác suất để học sinh được chọn giỏi Toán hoặc giỏi Văn là","opts":["3/4","1/2","5/8","7/10"],"ans":0,"slot":8,"slot_name":"Biến cố hợp - số liệu lớp","level":"Biết","topic":"Biến cố hợp - số liệu lớp","exp":"P(Toán ∪ Văn) = (22 + 18 - 10)/40 = 30/40 = 3/4."},{"id":"p1s8_d2","q":"Một lớp có 45 học sinh, trong đó có 25 em đăng ký học phụ đạo Toán, 20 em đăng ký học phụ đạo Tiếng Anh và 10 em đăng ký học cả hai. Chọn ngẫu nhiên một học sinh của lớp. Xác suất để học sinh đó đăng ký học Toán hoặc Tiếng Anh là","opts":["2/3","7/9","5/9","8/9"],"ans":1,"slot":8,"slot_name":"Biến cố hợp - số liệu lớp","level":"Biết","topic":"Biến cố hợp - số liệu lớp","exp":"P(Toán ∪ Anh) = (25 + 20 - 10)/45 = 35/45 = 7/9."},{"id":"p1s8_d3","q":"Một lớp 10 có 35 học sinh, trong đó có 18 em tham gia câu lạc bộ Toán, 14 em tham gia câu lạc bộ Tiếng Anh và 6 em tham gia cả hai câu lạc bộ. Chọn ngẫu nhiên một học sinh trong lớp. Xác suất để học sinh đó tham gia ít nhất một trong hai câu lạc bộ là","opts":["32/35","20/35","26/35","9/35"],"ans":2,"slot":8,"slot_name":"Biến cố hợp - số liệu lớp","level":"Biết","topic":"Biến cố hợp - số liệu lớp","exp":"P(Toán ∪ Anh) = (18 + 14 - 6)/35 = 26/35."},{"id":"p1s8_d4","q":"Lớp 10A có 40 học sinh, trong đó có 24 em tham gia hoạt động văn nghệ, 18 em tham gia hoạt động thể thao và 8 em tham gia cả hai. Chọn ngẫu nhiên một học sinh của lớp. Xác suất để học sinh đó tham gia ít nhất một trong hai hoạt động là","opts":["21/40","13/20","3/4","17/20"],"ans":3,"slot":8,"slot_name":"Biến cố hợp - số liệu lớp","level":"Biết","topic":"Biến cố hợp - số liệu lớp","exp":"P(Văn nghệ ∪ Thể thao) = (24 + 18 - 8)/40 = 34/40 = 17/20."},{"id":"p1s8_d5","q":"Một lớp có 50 học sinh, trong đó có 28 em chơi bóng đá, 20 em chơi cầu lông và 8 em chơi cả hai môn. Chọn ngẫu nhiên một học sinh của lớp. Xác suất để học sinh đó chơi bóng đá hoặc cầu lông là","opts":["3/5","4/5","9/10","12/25"],"ans":1,"slot":8,"slot_name":"Biến cố hợp - số liệu lớp","level":"Biết","topic":"Biến cố hợp - số liệu lớp","exp":"P(BĐ ∪ CL) = (28 + 20 - 8)/50 = 40/50 = 4/5."},{"id":"p1s8_d6","q":"Trong một lớp học có 50 học sinh. Khi đăng ký học phụ đạo thì có 27 học sinh đăng ký học Toán, 23 học sinh đăng ký học Tiếng Anh, 12 học sinh đăng ký học cả Toán và Tiếng Anh. Chọn ngẫu nhiên 1 học sinh, xác suất để em này học Toán hoặc Tiếng Anh là","opts":["76%","78%","70%","54%"],"ans":0,"slot":8,"slot_name":"Biến cố hợp - số liệu lớp","level":"Biết","topic":"Biến cố hợp - số liệu lớp","exp":"P(Toán ∪ Anh) = (27 + 23 - 12)/50 = 38/50 = 76%."},{"id":"p1s9_d1","q":"Khảo sát chiều cao (cm) của 50 học sinh: [150;155): 6, [155;160): 12, [160;165): 18, [165;170): 9, [170;175): 5. Nhóm chứa mốt của mẫu số liệu trên là","opts":["[155; 160)","[165; 170)","[150; 155)","[160; 165)"],"ans":3,"slot":9,"slot_name":"Nhóm chứa mốt - MSL ghép nhóm","level":"Biết","topic":"Nhóm chứa mốt - MSL ghép nhóm","exp":"Nhóm có tần số lớn nhất là [160;165) với 18 học sinh → đó là nhóm chứa mốt."},{"id":"p1s9_d2","q":"Bảng cân nặng (kg) của một số học sinh lớp 11: [40;45): 4, [45;50): 10, [50;55): 16, [55;60): 8, [60;65): 2. Nhóm chứa mốt của mẫu số liệu trên là","opts":["[45; 50)","[55; 60)","[50; 55)","[40; 45)"],"ans":2,"slot":9,"slot_name":"Nhóm chứa mốt - MSL ghép nhóm","level":"Biết","topic":"Nhóm chứa mốt - MSL ghép nhóm","exp":"Tần số lớn nhất là 16 ở nhóm [50;55)."},{"id":"p1s9_d3","q":"Khảo sát số giờ ngủ một ngày của 30 học sinh: [5;6): 3, [6;7): 7, [7;8): 11, [8;9): 6, [9;10): 3. Nhóm chứa mốt của mẫu số liệu ghép nhóm trên là","opts":["[7; 8)","[6; 7)","[8; 9)","[5; 6)"],"ans":0,"slot":9,"slot_name":"Nhóm chứa mốt - MSL ghép nhóm","level":"Biết","topic":"Nhóm chứa mốt - MSL ghép nhóm","exp":"Tần số lớn nhất là 11 ở nhóm [7;8)."},{"id":"p1s9_d4","q":"Khảo sát chiều cao (cm) của 40 cây giống: [20;25): 5, [25;30): 8, [30;35): 15, [35;40): 9, [40;45): 3. Nhóm chứa mốt của mẫu số liệu trên là","opts":["[30; 35)","[25; 30)","[35; 40)","[20; 25)"],"ans":0,"slot":9,"slot_name":"Nhóm chứa mốt - MSL ghép nhóm","level":"Biết","topic":"Nhóm chứa mốt - MSL ghép nhóm","exp":"Tần số lớn nhất là 15 ở nhóm [30;35)."},{"id":"p1s9_d5","q":"Khảo sát số sản phẩm bán được của 25 cửa hàng: [10;20): 3, [20;30): 5, [30;40): 9, [40;50): 6, [50;60): 2. Nhóm chứa mốt của mẫu số liệu trên là","opts":["[40; 50)","[20; 30)","[10; 20)","[30; 40)"],"ans":3,"slot":9,"slot_name":"Nhóm chứa mốt - MSL ghép nhóm","level":"Biết","topic":"Nhóm chứa mốt - MSL ghép nhóm","exp":"Tần số lớn nhất là 9 ở nhóm [30;40)."},{"id":"p1s9_d6","q":"Khảo sát thời gian tập thể dục (phút) của một số học sinh khối 11: [0;20): 5, [20;40): 9, [40;60): 12, [60;80): 10, [80;100): 6. Nhóm chứa mốt của mẫu số liệu trên là","opts":["[40; 60)","[20; 40)","[60; 80)","[80; 100)"],"ans":0,"slot":9,"slot_name":"Nhóm chứa mốt - MSL ghép nhóm","level":"Biết","topic":"Nhóm chứa mốt - MSL ghép nhóm","exp":"Tần số lớn nhất là 12 ở nhóm [40;60)."},{"id":"p1s10_d1","q":"Cho hình lập phương ABCD.A'B'C'D'. Số đo góc giữa hai đường thẳng AB và A'C' bằng","opts":["60°","45°","90°","30°"],"ans":1,"slot":10,"slot_name":"Hình lập phương - góc giữa 2 đường thẳng","level":"Biết","topic":"Hình lập phương - góc giữa 2 đường thẳng","exp":"A'C' // AC (vì A'B'C'D' là hình vuông). Góc giữa AB và AC trong hình vuông ABCD là 45°."},{"id":"p1s10_d2","q":"Cho hình lập phương ABCD.A'B'C'D'. Số đo góc giữa hai đường thẳng AC và B'D' bằng","opts":["90°","60°","45°","30°"],"ans":0,"slot":10,"slot_name":"Hình lập phương - góc giữa 2 đường thẳng","level":"Biết","topic":"Hình lập phương - góc giữa 2 đường thẳng","exp":"B'D' // BD. Trong hình vuông ABCD, AC ⊥ BD nên góc giữa AC và B'D' là 90°."},{"id":"p1s10_d3","q":"Cho hình lập phương ABCD.A'B'C'D'. Số đo góc giữa hai đường thẳng AD và B'C' bằng","opts":["45°","0°","60°","90°"],"ans":1,"slot":10,"slot_name":"Hình lập phương - góc giữa 2 đường thẳng","level":"Biết","topic":"Hình lập phương - góc giữa 2 đường thẳng","exp":"B'C' // BC // AD. Hai đường thẳng song song nên góc bằng 0°."},{"id":"p1s10_d4","q":"Cho hình lập phương ABCD.A'B'C'D'. Số đo góc giữa hai đường thẳng AB' và CD bằng","opts":["60°","90°","45°","30°"],"ans":2,"slot":10,"slot_name":"Hình lập phương - góc giữa 2 đường thẳng","level":"Biết","topic":"Hình lập phương - góc giữa 2 đường thẳng","exp":"CD // AB. Tam giác AB'B vuông tại B với AB = BB' nên góc B'AB = 45°. Vậy góc(AB', CD) = góc(AB', AB) = 45°."},{"id":"p1s10_d5","q":"Cho hình lập phương ABCD.A'B'C'D'. Số đo góc giữa hai đường thẳng AC và A'B' bằng","opts":["45°","30°","60°","90°"],"ans":0,"slot":10,"slot_name":"Hình lập phương - góc giữa 2 đường thẳng","level":"Biết","topic":"Hình lập phương - góc giữa 2 đường thẳng","exp":"A'B' // AB. Trong hình vuông ABCD, góc giữa AC và AB là 45°."},{"id":"p1s10_d6","q":"Cho hình lập phương ABCD.A'B'C'D'. Góc giữa hai đường thẳng AB và A'C' bằng:","opts":["45°","90°","30°","60°"],"ans":0,"slot":10,"slot_name":"Hình lập phương - góc giữa 2 đường thẳng","level":"Biết","topic":"Hình lập phương - góc giữa 2 đường thẳng","exp":"A'C' // AC. Góc giữa AB và AC trong hình vuông ABCD là 45°."},{"id":"p1s11_d1","q":"Cho hình chóp tứ giác đều S.ABCD có tâm đáy là O. Khẳng định nào sau đây đúng?","opts":["SO ⊥ (ABCD)","SA ⊥ (ABCD)","SO ⊥ (SAC)","SA ⊥ (SBD)"],"ans":0,"slot":11,"slot_name":"Hình chóp đều - đường thẳng ⊥ mặt phẳng","level":"Hiểu","topic":"Hình chóp đều - đường thẳng ⊥ mặt phẳng","exp":"Trong hình chóp đều, đường thẳng nối đỉnh với tâm đáy luôn vuông góc với mặt đáy: SO ⊥ (ABCD)."},{"id":"p1s11_d2","q":"Cho hình chóp tam giác đều S.ABC có tâm đáy là G. Khẳng định nào sau đây đúng?","opts":["SA ⊥ (ABC)","AB ⊥ (SBC)","BC ⊥ (SAB)","SG ⊥ (ABC)"],"ans":3,"slot":11,"slot_name":"Hình chóp đều - đường thẳng ⊥ mặt phẳng","level":"Hiểu","topic":"Hình chóp đều - đường thẳng ⊥ mặt phẳng","exp":"Trong hình chóp đều, đường thẳng nối đỉnh với trọng tâm đáy luôn vuông góc với mặt đáy: SG ⊥ (ABC)."},{"id":"p1s11_d3","q":"Cho hình chóp tứ giác đều S.ABCD có tâm đáy là O. Đường thẳng SO vuông góc với mặt phẳng nào sau đây?","opts":["(SAB)","(SAC)","(SBD)","(ABCD)"],"ans":3,"slot":11,"slot_name":"Hình chóp đều - đường thẳng ⊥ mặt phẳng","level":"Hiểu","topic":"Hình chóp đều - đường thẳng ⊥ mặt phẳng","exp":"SO ⊥ (ABCD) (đường cao của hình chóp đều)."},{"id":"p1s11_d4","q":"Cho hình chóp tứ giác đều S.ABCD có tâm đáy là O. Đường thẳng AC vuông góc với mặt phẳng nào sau đây?","opts":["(SAB)","(SBD)","(SCD)","(SAD)"],"ans":1,"slot":11,"slot_name":"Hình chóp đều - đường thẳng ⊥ mặt phẳng","level":"Hiểu","topic":"Hình chóp đều - đường thẳng ⊥ mặt phẳng","exp":"AC ⊥ BD (đường chéo hình vuông) và AC ⊥ SO (vì SO ⊥ đáy nên SO ⊥ AC). Vậy AC ⊥ (SBD)."},{"id":"p1s11_d5","q":"Cho hình chóp tam giác đều S.ABC có tâm đáy là G. Đường thẳng nào sau đây vuông góc với mặt phẳng (ABC)?","opts":["SA","SB","SG","SC"],"ans":2,"slot":11,"slot_name":"Hình chóp đều - đường thẳng ⊥ mặt phẳng","level":"Hiểu","topic":"Hình chóp đều - đường thẳng ⊥ mặt phẳng","exp":"SG là đường cao của hình chóp đều, vuông góc với mặt đáy."},{"id":"p1s11_d6","q":"Cho hình chóp S.ABCD có đáy là hình vuông, cạnh bên SA ⊥ (ABCD). Khẳng định nào sau đây sai?","opts":["CD ⊥ (SBC)","SA ⊥ (ABC)","BC ⊥ (SAB)","BD ⊥ (SAC)"],"ans":0,"slot":11,"slot_name":"Hình chóp đều - đường thẳng ⊥ mặt phẳng","level":"Hiểu","topic":"Hình chóp đều - đường thẳng ⊥ mặt phẳng","exp":"CD ⊥ (SAD), KHÔNG vuông góc (SBC). (B, C, D đều đúng)."},{"id":"p1s12_d1","q":"Cho hình chóp tứ giác đều S.ABCD có tâm đáy là O. Khẳng định nào sau đây đúng?","opts":["(SAB) ⊥ (SCD)","(SAB) ⊥ (SBC)","(SAC) ⊥ (SBD)","(SAD) ⊥ (SBC)"],"ans":2,"slot":12,"slot_name":"Hình chóp/lập phương - 2 mặt phẳng ⊥","level":"Hiểu","topic":"Hình chóp/lập phương - 2 mặt phẳng ⊥","exp":"Trong chóp tứ giác đều: (SAC) chứa SO và đi qua AC; (SBD) chứa SO và đi qua BD. AC ⊥ BD, SO ⊥ đáy nên (SAC) ⊥ (SBD)."},{"id":"p1s12_d2","q":"Cho hình lập phương ABCD.A'B'C'D'. Khẳng định nào sau đây đúng?","opts":["(ABB'A') song song (ABCD)","(ABB'A') ⊥ (ABCD)","(ABB'A') song song (CDD'C')","(ABB'A') ⊥ (CDD'C')"],"ans":1,"slot":12,"slot_name":"Hình chóp/lập phương - 2 mặt phẳng ⊥","level":"Hiểu","topic":"Hình chóp/lập phương - 2 mặt phẳng ⊥","exp":"(ABB'A') chứa AA' ⊥ (ABCD) nên (ABB'A') ⊥ (ABCD). (C cũng đúng vì 2 mặt đối diện song song nhau, nhưng lựa chọn chuẩn là B)."},{"id":"p1s12_d3","q":"Cho hình chóp tứ giác đều S.ABCD có tâm đáy là O. Khẳng định nào sau đây đúng?","opts":["(SAC) ⊥ (SBD)","(SAB) ⊥ (SCD)","(SAD) ⊥ (SBC)","(SAB) ⊥ (ABCD)"],"ans":0,"slot":12,"slot_name":"Hình chóp/lập phương - 2 mặt phẳng ⊥","level":"Hiểu","topic":"Hình chóp/lập phương - 2 mặt phẳng ⊥","exp":"AC ⊥ BD và SO ⊥ đáy. (SAC) chứa AC, SO; (SBD) chứa BD, SO. BD ⊥ (SAC) nên (SBD) ⊥ (SAC)."},{"id":"p1s12_d4","q":"Cho hình lập phương ABCD.A'B'C'D'. Khẳng định nào sau đây đúng?","opts":["(ACC'A') ⊥ (BDD'B')","(ABCD) ⊥ (A'B'C'D')","(ABB'A') ⊥ (CDD'C')","(ABB'A') song song (ABCD)"],"ans":0,"slot":12,"slot_name":"Hình chóp/lập phương - 2 mặt phẳng ⊥","level":"Hiểu","topic":"Hình chóp/lập phương - 2 mặt phẳng ⊥","exp":"Trong hình lập phương, (ACC'A') chứa AC, (BDD'B') chứa BD. AC ⊥ BD và 2 mặt cùng vuông góc với (ABCD), giao tuyến của chúng vuông góc với cả AC và BD, nên (ACC'A') ⊥ (BDD'B')."},{"id":"p1s12_d5","q":"Cho hình chóp tứ giác đều S.ABCD. Khẳng định nào sau đây đúng?","opts":["(SAB) ⊥ (SAD)","(SAC) ⊥ (SBD)","(SAB) ⊥ (SBC)","(SAB) ⊥ (ABCD)"],"ans":1,"slot":12,"slot_name":"Hình chóp/lập phương - 2 mặt phẳng ⊥","level":"Hiểu","topic":"Hình chóp/lập phương - 2 mặt phẳng ⊥","exp":"(SAC) ⊥ (SBD) (đã chứng minh ở các câu trên: AC ⊥ BD, SO chung)."},{"id":"p1s12_d6","q":"Cho hình lăng trụ ABC.A'B'C' có đáy ABC là tam giác vuông tại B, cạnh bên AA' vuông góc với mặt đáy. Khẳng định nào sau đây sai?","opts":["(BCC'B') ⊥ (A'B'C')","(BCC'B') ⊥ (ACC'A')","(BCC'B') ⊥ (ABB'A')","(BCC'B') ⊥ (ABC)"],"ans":1,"slot":12,"slot_name":"Hình chóp/lập phương - 2 mặt phẳng ⊥","level":"Hiểu","topic":"Hình chóp/lập phương - 2 mặt phẳng ⊥","exp":"Tam giác vuông tại B ⟹ AB ⊥ BC. (BCC'B') chứa BC ⊥ AB và BC ⊥ AA' nên (BCC'B') ⊥ (ABB'A'). Còn (ACC'A') chứa AC nhưng AC KHÔNG vuông góc BC (chỉ vuông B). Vậy (BCC'B') KHÔNG ⊥ (ACC'A')."}];
+const MATRIX_SLOTS = {"1":{"name":"Công thức luỹ thừa","level":"Biết"},"2":{"name":"Khẳng định đúng - công thức logarit","level":"Biết"},"3":{"name":"Đường thẳng vuông góc mặt phẳng (lý thuyết)","level":"Biết"},"4":{"name":"Tứ phân vị Q₃ - MSL ghép nhóm","level":"Biết"},"5":{"name":"Biến cố hợp/giao/xung khắc/độc lập","level":"Biết"},"6":{"name":"Xác suất 2 biến cố độc lập (An & Bình)","level":"Hiểu"},"7":{"name":"Hộp cầu - 2 viên cùng màu (XS xung khắc)","level":"Biết"},"8":{"name":"Biến cố hợp - số liệu lớp","level":"Biết"},"9":{"name":"Nhóm chứa mốt - MSL ghép nhóm","level":"Biết"},"10":{"name":"Hình lập phương - góc giữa 2 đường thẳng","level":"Biết"},"11":{"name":"Hình chóp đều - đường thẳng ⊥ mặt phẳng","level":"Hiểu"},"12":{"name":"Hình chóp/lập phương - 2 mặt phẳng ⊥","level":"Hiểu"}};
+
+</script>
+
+<script>
+// ============= CLOUD STORAGE (JSONBin.io) =============
+// HƯỚNG DẪN CẤU HÌNH (chỉ làm 1 LẦN, ~3 phút):
+// 1. Truy cập https://jsonbin.io  → bấm "Sign Up" (đăng ký miễn phí bằng email)
+// 2. Sau khi đăng nhập, vào "API Keys" → copy "X-Master-Key"
+// 3. Tạo bin mới: vào "Bins" → "Create Bin" → paste nội dung sau và bấm "Create":
+//      {"results":[]}
+//    Sau đó copy "Bin ID" (chuỗi dài trong URL).
+// 4. Dán giá trị vào 2 dòng dưới đây:
+
+const JSONBIN_BIN_ID = "PASTE_YOUR_BIN_ID_HERE";        // Ví dụ: "65f1a2b3c4d5e6f7a8b9c0d1"
+const JSONBIN_MASTER_KEY = "PASTE_YOUR_MASTER_KEY_HERE"; // Ví dụ: "$2a$10$abc...xyz"
+
+// 5. Đặt mật khẩu cho dashboard giáo viên (đổi tùy thích):
+const TEACHER_PASSWORD = "giaovien2025";
+
+// === KHÔNG CẦN SỬA GÌ BÊN DƯỚI ===
+const CLOUD_ENABLED = JSONBIN_BIN_ID !== "PASTE_YOUR_BIN_ID_HERE" && JSONBIN_MASTER_KEY !== "PASTE_YOUR_MASTER_KEY_HERE";
+const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
+const STORAGE_KEY = 'mathquest11_p1_v2:results:v1';
+const PENDING_KEY = 'mathquest11_p1_v2:pending:v1';
+const NAME_KEY = 'mathquest11_p1_v2:lastname:v1';
+const QUESTIONS_PER_QUIZ = 12;
+const TIME_LIMIT_SECONDS = 15 * 60;
+
+// ============= STATE =============
+const state = {
+  playerName: '',
+  questions: [],
+  currentIdx: 0,
+  answers: [],
+  score: 0,
+  startTime: null,
+  remaining: TIME_LIMIT_SECONDS,
+  timerInterval: null,
+  cloudResults: null,        // cache khi giáo viên xem dashboard
+};
+
+// ============= LOCAL STORAGE =============
+function localGet(key, fallback) {
+  try { return JSON.parse(localStorage.getItem(key)) ?? fallback; }
+  catch (e) { return fallback; }
+}
+function localSet(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+}
+
+// ============= CLOUD =============
+async function cloudFetchAll() {
+  if (!CLOUD_ENABLED) return null;
+  try {
+    const res = await fetch(JSONBIN_URL + '/latest', {
+      headers: { 'X-Master-Key': JSONBIN_MASTER_KEY, 'X-Bin-Meta': 'false' }
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    return Array.isArray(data?.results) ? data.results : [];
+  } catch (e) {
+    console.warn('Cloud fetch failed:', e);
+    return null;
+  }
+}
+
+async function cloudPushResult(result) {
+  if (!CLOUD_ENABLED) return false;
+  try {
+    // Read latest, append, write back. Simple approach (last-write-wins).
+    const current = await cloudFetchAll() || [];
+    current.push(result);
+    const res = await fetch(JSONBIN_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': JSONBIN_MASTER_KEY,
+      },
+      body: JSON.stringify({ results: current })
+    });
+    return res.ok;
+  } catch (e) {
+    console.warn('Cloud push failed:', e);
+    return false;
+  }
+}
+
+async function flushPending() {
+  const pending = localGet(PENDING_KEY, []);
+  if (pending.length === 0) return;
+  if (!CLOUD_ENABLED) return;
+  try {
+    const current = await cloudFetchAll();
+    if (current === null) return; // network failed, keep pending
+    const merged = [...current, ...pending];
+    const res = await fetch(JSONBIN_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': JSONBIN_MASTER_KEY,
+      },
+      body: JSON.stringify({ results: merged })
+    });
+    if (res.ok) {
+      localSet(PENDING_KEY, []);
+    }
+  } catch (e) {
+    console.warn('Flush pending failed:', e);
+  }
+}
+
+// Save: write to local, attempt cloud, if cloud fails queue in pending
+async function saveResult(result) {
+  // Always save locally
+  const local = localGet(STORAGE_KEY, []);
+  local.push(result);
+  if (local.length > 100) local.splice(0, local.length - 100);
+  localSet(STORAGE_KEY, local);
+
+  // Try cloud
+  if (CLOUD_ENABLED) {
+    const ok = await cloudPushResult(result);
+    if (!ok) {
+      // Queue for later
+      const pending = localGet(PENDING_KEY, []);
+      pending.push(result);
+      localSet(PENDING_KEY, pending);
+    }
+  }
+}
+
+// ============= UTILS =============
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function pickRandom(arr, n) { return shuffle(arr).slice(0, n); }
+function formatTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============= ADMIN ACCESS =============
+let logoTapCount = 0;
+let logoTapTimer = null;
+
+function checkAdminAccess() {
+  // URL param ?admin=1 → show login
+  const params = new URLSearchParams(location.search);
+  if (params.get('admin') === '1') {
+    showLogin();
+  }
+
+  // Tap logo 5 times → show login
+  document.querySelector('.logo').addEventListener('click', () => {
+    logoTapCount++;
+    if (logoTapTimer) clearTimeout(logoTapTimer);
+    logoTapTimer = setTimeout(() => { logoTapCount = 0; }, 2000);
+    if (logoTapCount >= 5) {
+      logoTapCount = 0;
+      showLogin();
+    }
+  });
+}
+
+function showLogin() {
+  const overlay = document.createElement('div');
+  overlay.className = 'login-overlay';
+  overlay.innerHTML = `
+    <div class="login-box">
+      <h2>Khu vực giáo viên</h2>
+      <p>Nhập mật khẩu để xem dashboard</p>
+      <input type="password" class="name-input" id="login-pwd" placeholder="Mật khẩu..." autofocus>
+      <div class="login-error" id="login-err"></div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:16px;">
+        <button class="btn-primary" id="login-submit">Đăng nhập</button>
+        <button class="btn-secondary" id="login-cancel">Hủy</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  const pwdInput = overlay.querySelector('#login-pwd');
+  const errEl = overlay.querySelector('#login-err');
+  const submit = () => {
+    if (pwdInput.value === TEACHER_PASSWORD) {
+      overlay.remove();
+      openDashboard();
+    } else {
+      errEl.textContent = 'Mật khẩu không đúng';
+      pwdInput.value = '';
+      pwdInput.focus();
+    }
+  };
+  overlay.querySelector('#login-submit').addEventListener('click', submit);
+  overlay.querySelector('#login-cancel').addEventListener('click', () => overlay.remove());
+  pwdInput.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
+}
+
+// ============= HOME =============
+function initHome() {
+  document.getElementById('stat-pool').textContent = QUESTIONS_POOL.length;
+
+  const nameInput = document.getElementById('player-name');
+  const startBtn = document.getElementById('btn-start');
+  const historyBtn = document.getElementById('btn-show-history');
+
+  const lastName = localStorage.getItem(NAME_KEY) || '';
+  if (lastName) {
+    nameInput.value = lastName;
+    historyBtn.style.display = 'inline-block';
+  }
+
+  // Function dùng chung — kiểm tra và bật/tắt nút
+  function refreshNameState() {
+    const v = nameInput.value.trim();
+    startBtn.disabled = v.length < 2;
+    historyBtn.style.display = v.length >= 2 ? 'inline-block' : 'none';
+  }
+
+  // Đăng ký nhiều event để hỗ trợ tốt hơn trên iOS Safari
+  ['input', 'change', 'keyup', 'blur', 'paste'].forEach(evt => {
+    nameInput.addEventListener(evt, refreshNameState);
+  });
+
+  nameInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      nameInput.blur(); // ẩn bàn phím
+      refreshNameState();
+      if (!startBtn.disabled) startQuiz();
+    }
+  });
+
+  // Khi user bấm "Bắt đầu" — luôn refresh state trước rồi mới quyết định
+  // Dùng cả click và touchend để chắc chắn iOS bắt được
+  function tryStart(e) {
+    if (e) e.preventDefault();
+    refreshNameState(); // ép cập nhật state
+    const v = nameInput.value.trim();
+    if (v.length >= 2) {
+      startQuiz();
+    } else {
+      nameInput.focus();
+    }
+  }
+  startBtn.addEventListener('click', tryStart);
+  startBtn.addEventListener('touchend', tryStart);
+
+  // CỰC QUAN TRỌNG cho iOS: nút phải KHÔNG disable thực sự để tap được
+  // Thay vì disabled, ta làm visually disabled và check trong handler
+  startBtn.disabled = false; // luôn enabled
+  // Override CSS dynamic
+  const origRefresh = refreshNameState;
+  refreshNameState = function() {
+    const v = nameInput.value.trim();
+    if (v.length < 2) {
+      startBtn.style.opacity = '0.35';
+      startBtn.style.cursor = 'not-allowed';
+    } else {
+      startBtn.style.opacity = '';
+      startBtn.style.cursor = 'pointer';
+    }
+    historyBtn.style.display = v.length >= 2 ? 'inline-block' : 'none';
+  };
+
+  document.getElementById('btn-show-leaderboard').addEventListener('click', async () => {
+    await renderLeaderboard();
+    showScreen('screen-leaderboard');
+  });
+
+  document.getElementById('btn-show-history').addEventListener('click', () => {
+    const name = nameInput.value.trim();
+    if (name.length < 2) return;
+    renderHistory(name);
+    showScreen('screen-history');
+  });
+
+  document.getElementById('btn-back-from-lb').addEventListener('click', () => showScreen('screen-home'));
+  document.getElementById('btn-back-from-history').addEventListener('click', () => showScreen('screen-home'));
+
+  // Update cloud status footer
+  const cs = document.getElementById('cloud-status');
+  if (CLOUD_ENABLED) {
+    cs.innerHTML = '<span class="ok">●</span> Đã đồng bộ cloud';
+  } else {
+    cs.innerHTML = '<span class="warn">●</span> Chế độ offline (chưa cấu hình cloud)';
+  }
+
+  // Try flush pending in background
+  flushPending();
+}
+
+// ============= QUIZ =============
+// Pick 1 question from each slot (1..12) following matrix
+function pickByMatrix() {
+  const result = [];
+  for (let slot = 1; slot <= 12; slot++) {
+    const candidates = QUESTIONS_POOL.filter(q => q.slot === slot);
+    if (candidates.length === 0) {
+      console.warn('No questions in slot', slot);
+      continue;
+    }
+    const picked = candidates[Math.floor(Math.random() * candidates.length)];
+    result.push(picked);
+  }
+  return result;
+}
+
+function startQuiz() {
+  const name = document.getElementById('player-name').value.trim();
+  if (name.length < 2) return;
+
+  state.playerName = name;
+  localStorage.setItem(NAME_KEY, name);
+
+  state.questions = pickByMatrix();  // Theo đúng ma trận - 1 câu mỗi slot
+  state.currentIdx = 0;
+  state.answers = [];
+  state.score = 0;
+  state.startTime = Date.now();
+  state.remaining = TIME_LIMIT_SECONDS;
+
+  startTimer();
+  showScreen('screen-quiz');
+  renderQuestion();
+}
+
+function startTimer() {
+  if (state.timerInterval) clearInterval(state.timerInterval);
+  updateTimerDisplay();
+  state.timerInterval = setInterval(() => {
+    state.remaining--;
+    updateTimerDisplay();
+    if (state.remaining <= 0) {
+      clearInterval(state.timerInterval);
+      finishQuiz(true);
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const el = document.getElementById('q-timer');
+  el.textContent = formatTime(Math.max(0, state.remaining));
+  el.classList.toggle('warn', state.remaining <= 60);
+}
+
+function renderQuestion() {
+  const q = state.questions[state.currentIdx];
+  const card = document.getElementById('question-card');
+
+  document.getElementById('q-current').textContent = state.currentIdx + 1;
+  document.getElementById('q-score').textContent = state.score;
+  document.getElementById('progress-fill').style.width = ((state.currentIdx) / QUESTIONS_PER_QUIZ * 100) + '%';
+
+  const letters = ['A', 'B', 'C', 'D'];
+  const optionsHtml = q.opts.map((opt, i) => `
+    <button class="option" data-idx="${i}">
+      <span class="letter">${letters[i]}</span>
+      <span class="text">${escapeHtml(opt)}</span>
+    </button>
+  `).join('');
+
+  const slotName = q.slot_name || q.topic;
+  const levelTag = q.level === 'Hiểu' ? '<span class="level-tag hieu">Hiểu</span>' : '<span class="level-tag biet">Biết</span>';
+  card.innerHTML = `
+    <div class="question-meta">
+      <div class="question-num">Câu ${state.currentIdx + 1} ${levelTag}</div>
+      <div class="question-topic">${escapeHtml(slotName)}</div>
+    </div>
+    <div class="question-text">${escapeHtml(q.q)}</div>
+    <div class="options" id="options-list">${optionsHtml}</div>
+    <div class="feedback" id="feedback"></div>
+  `;
+
+  document.getElementById('btn-next').classList.remove('show');
+  card.querySelectorAll('.option').forEach(btn => {
+    btn.addEventListener('click', () => handleAnswer(parseInt(btn.dataset.idx)));
+  });
+}
+
+function handleAnswer(pickedIdx) {
+  const q = state.questions[state.currentIdx];
+  const isRight = pickedIdx === q.ans;
+
+  state.answers.push({
+    qid: q.id,
+    picked: pickedIdx,
+    correct: q.ans,
+    isRight: isRight,
+  });
+
+  if (isRight) state.score++;
+
+  const options = document.querySelectorAll('#options-list .option');
+  options.forEach((opt, i) => {
+    opt.classList.add('disabled');
+    if (i === q.ans) opt.classList.add('correct');
+    else if (i === pickedIdx) opt.classList.add('wrong');
+  });
+
+  document.getElementById('q-score').textContent = state.score;
+
+  const feedback = document.getElementById('feedback');
+  const letters = ['A', 'B', 'C', 'D'];
+  if (isRight) {
+    feedback.className = 'feedback correct show';
+    feedback.innerHTML = `
+      <div class="feedback-title">✓ Chính xác!</div>
+      ${q.exp ? `<div class="feedback-body">${escapeHtml(q.exp)}</div>` : ''}
+    `;
+  } else {
+    feedback.className = 'feedback wrong show';
+    feedback.innerHTML = `
+      <div class="feedback-title">✗ Chưa đúng — đáp án đúng là ${letters[q.ans]}</div>
+      ${q.exp ? `<div class="feedback-body">${escapeHtml(q.exp)}</div>` : ''}
+    `;
+  }
+
+  const nextBtn = document.getElementById('btn-next');
+  nextBtn.classList.add('show');
+  nextBtn.textContent = state.currentIdx === QUESTIONS_PER_QUIZ - 1 ? 'Xem kết quả →' : 'Câu tiếp theo →';
+}
+
+document.getElementById('btn-next').addEventListener('click', () => {
+  state.currentIdx++;
+  if (state.currentIdx >= QUESTIONS_PER_QUIZ) finishQuiz(false);
+  else renderQuestion();
+});
+
+// ============= FINISH =============
+async function finishQuiz(timedOut) {
+  if (state.timerInterval) clearInterval(state.timerInterval);
+  const timeSec = TIME_LIMIT_SECONDS - state.remaining;
+
+  // Build compact result for cloud (no full question text — only ids)
+  const result = {
+    name: state.playerName,
+    score: state.score,
+    total: QUESTIONS_PER_QUIZ,
+    timeSec: timeSec,
+    timedOut: timedOut,
+    date: Date.now(),
+    answers: state.answers, // {qid, picked, correct, isRight}
+  };
+
+  // Keep full questions locally for review (don't push to cloud to save space)
+  const localResult = { ...result, questions: state.questions };
+  const local = localGet(STORAGE_KEY, []);
+  local.push(localResult);
+  if (local.length > 100) local.splice(0, local.length - 100);
+  localSet(STORAGE_KEY, local);
+
+  // Push compact result to cloud
+  if (CLOUD_ENABLED) {
+    const ok = await cloudPushResult(result);
+    if (!ok) {
+      const pending = localGet(PENDING_KEY, []);
+      pending.push(result);
+      localSet(PENDING_KEY, pending);
+    }
+  }
+
+  renderResult(localResult);
+  showScreen('screen-result');
+}
+
+function renderResult(result) {
+  const pct = result.score / result.total;
+  let emoji, title, subtitle;
+  if (pct === 1) { emoji = '🏆'; title = 'Xuất sắc!'; subtitle = 'Đạt điểm tuyệt đối — bạn quá đỉnh!'; fireConfetti(); }
+  else if (pct >= 0.83) { emoji = '🎉'; title = 'Rất tốt!'; subtitle = 'Bạn đã làm bài rất tốt'; fireConfetti(); }
+  else if (pct >= 0.67) { emoji = '👏'; title = 'Khá!'; subtitle = 'Bạn đã làm khá tốt, cố gắng thêm chút nữa nhé'; }
+  else if (pct >= 0.5) { emoji = '💪'; title = 'Trung bình'; subtitle = 'Cần ôn thêm các phần chưa nắm vững'; }
+  else { emoji = '📚'; title = 'Hãy ôn lại'; subtitle = result.timedOut ? 'Hết giờ rồi! Lần sau cố gắng nhanh hơn.' : 'Đừng nản, làm lại để cải thiện nhé!'; }
+
+  document.getElementById('r-emoji').textContent = emoji;
+  document.getElementById('r-title').textContent = title;
+  document.getElementById('r-subtitle').textContent = subtitle;
+  document.getElementById('r-score').textContent = result.score;
+  document.getElementById('r-correct').textContent = result.score;
+  document.getElementById('r-wrong').textContent = result.total - result.score;
+  document.getElementById('r-time').textContent = formatTime(result.timeSec);
+
+  const reviewList = document.getElementById('review-list');
+  const letters = ['A', 'B', 'C', 'D'];
+  reviewList.innerHTML = result.questions.map((q, i) => {
+    const ans = result.answers[i];
+    if (!ans) {
+      return `
+        <div class="review-item wrong">
+          <div class="review-q">Câu ${i+1}: ${escapeHtml(q.q)}</div>
+          <div class="review-meta">
+            <span class="your wrong">Chưa trả lời</span>
+            <span class="correct-ans">Đáp án đúng: ${letters[q.ans]}. ${escapeHtml(q.opts[q.ans])}</span>
+          </div>
+        </div>
+      `;
+    }
+    return `
+      <div class="review-item ${ans.isRight ? 'correct' : 'wrong'}">
+        <div class="review-q">Câu ${i+1}: ${escapeHtml(q.q)}</div>
+        <div class="review-meta">
+          <span class="your ${ans.isRight ? 'right' : 'wrong'}">Bạn chọn: ${letters[ans.picked]}. ${escapeHtml(q.opts[ans.picked])}</span>
+          ${!ans.isRight ? `<span class="correct-ans">Đáp án đúng: ${letters[q.correct]}. ${escapeHtml(q.opts[q.correct])}</span>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Mini leaderboard
+  renderLeaderboardInto('result-leaderboard', 5);
+}
+
+document.getElementById('btn-retry').addEventListener('click', startQuiz);
+document.getElementById('btn-home').addEventListener('click', () => showScreen('screen-home'));
+
+// ============= LEADERBOARD =============
+async function getCombinedResults() {
+  if (CLOUD_ENABLED) {
+    const cloud = await cloudFetchAll();
+    if (cloud) return cloud;
+  }
+  // Fallback to local
+  return localGet(STORAGE_KEY, []);
+}
+
+async function getLeaderboardData() {
+  const all = await getCombinedResults();
+  const byPlayer = {};
+  all.forEach(r => {
+    const key = r.name.toLowerCase().trim();
+    if (!byPlayer[key]) {
+      byPlayer[key] = r;
+    } else {
+      const cur = byPlayer[key];
+      if (r.score > cur.score || (r.score === cur.score && r.timeSec < cur.timeSec)) {
+        byPlayer[key] = r;
+      }
+    }
+  });
+  return Object.values(byPlayer).sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    return a.timeSec - b.timeSec;
+  });
+}
+
+async function renderLeaderboard() {
+  await renderLeaderboardInto('lb-list', 100);
+}
+
+async function renderLeaderboardInto(elId, limit) {
+  const el = document.getElementById(elId);
+  el.innerHTML = '<div class="empty-lb">Đang tải<span class="loading-dots"></span></div>';
+  try {
+    const lb = (await getLeaderboardData()).slice(0, limit);
+    if (lb.length === 0) {
+      el.innerHTML = '<div class="empty-lb">Chưa có dữ liệu — hãy là người đầu tiên!</div>';
+      return;
+    }
+    const myName = state.playerName.toLowerCase().trim();
+    el.innerHTML = lb.map((r, i) => {
+      const rank = i + 1;
+      let rowClass = '';
+      if (rank === 1) rowClass = 'gold';
+      else if (rank === 2) rowClass = 'silver';
+      else if (rank === 3) rowClass = 'bronze';
+      if (myName && r.name.toLowerCase().trim() === myName) rowClass += ' me';
+      const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '#' + rank;
+      return `
+        <div class="lb-row ${rowClass}">
+          <div class="lb-rank">${medal}</div>
+          <div class="lb-name">${escapeHtml(r.name)}</div>
+          <div class="lb-time">${formatTime(r.timeSec)}</div>
+          <div class="lb-score">${r.score}/${r.total}</div>
+        </div>
+      `;
+    }).join('');
+  } catch (e) {
+    el.innerHTML = '<div class="empty-lb">Lỗi tải dữ liệu</div>';
+  }
+}
+
+// ============= HISTORY =============
+async function renderHistory(name) {
+  document.getElementById('history-name').textContent = name;
+  const list = document.getElementById('history-list');
+  list.innerHTML = '<div class="empty-lb">Đang tải<span class="loading-dots"></span></div>';
+
+  const all = await getCombinedResults();
+  const key = name.toLowerCase().trim();
+  const history = all
+    .filter(r => r.name.toLowerCase().trim() === key)
+    .sort((a, b) => b.date - a.date);
+
+  if (history.length === 0) {
+    list.innerHTML = '<div class="empty-lb">Chưa có lượt làm bài nào.</div>';
+    return;
+  }
+  list.innerHTML = history.slice(0, 50).map((r, i) => {
+    const d = new Date(r.date);
+    const dateStr = d.toLocaleString('vi-VN', { dateStyle: 'short', timeStyle: 'short' });
+    return `
+      <div class="history-card">
+        <div>
+          <div style="font-weight:600;margin-bottom:4px;">Lượt ${history.length - i}</div>
+          <div class="history-info">${dateStr} · ${formatTime(r.timeSec)}${r.timedOut ? ' · Hết giờ' : ''}</div>
+        </div>
+        <div class="history-score">${r.score}/${r.total}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ============= CONFETTI =============
+function fireConfetti() {
+  const colors = ['#ffd23f', '#ff6b6b', '#4ecdc4', '#6bcf7f', '#f0ebe1'];
+  for (let i = 0; i < 50; i++) {
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.transform = `rotate(${Math.random() * 360}deg)`;
+      document.body.appendChild(c);
+      const fallDur = 2.5 + Math.random() * 2;
+      const drift = (Math.random() - 0.5) * 200;
+      c.animate([
+        { transform: `translate(0, 0) rotate(0deg)`, opacity: 1 },
+        { transform: `translate(${drift}px, 105vh) rotate(${720 + Math.random()*360}deg)`, opacity: 0.3 }
+      ], { duration: fallDur * 1000, easing: 'cubic-bezier(.2,.6,.4,1)' });
+      setTimeout(() => c.remove(), fallDur * 1000);
+    }, i * 30);
+  }
+}
+
+// ============= DASHBOARD =============
+async function openDashboard() {
+  showScreen('screen-dashboard');
+  await refreshDashboard();
+}
+
+async function refreshDashboard() {
+  const statusEl = document.getElementById('refresh-status');
+  statusEl.className = 'refresh-status loading';
+  statusEl.innerHTML = '<span class="dot"></span>Đang tải dữ liệu<span class="loading-dots"></span>';
+
+  let results;
+  if (CLOUD_ENABLED) {
+    results = await cloudFetchAll();
+    if (results === null) {
+      statusEl.className = 'refresh-status error';
+      statusEl.innerHTML = '<span class="dot"></span>Không kết nối được cloud';
+      results = localGet(STORAGE_KEY, []);
+    } else {
+      statusEl.className = 'refresh-status';
+      const now = new Date();
+      statusEl.innerHTML = `<span class="dot"></span>Đã cập nhật lúc ${now.toLocaleTimeString('vi-VN')}`;
+    }
+  } else {
+    results = localGet(STORAGE_KEY, []);
+    statusEl.className = 'refresh-status error';
+    statusEl.innerHTML = '<span class="dot"></span>Chỉ xem dữ liệu trên máy này (chưa cấu hình cloud)';
+  }
+
+  state.cloudResults = results;
+  renderDashboard(results);
+}
+
+function renderDashboard(results) {
+  // === TOTALS ===
+  const totalAttempts = results.length;
+  const uniqueStudents = new Set(results.map(r => r.name.toLowerCase().trim())).size;
+  const avgScore = totalAttempts > 0
+    ? (results.reduce((s, r) => s + r.score, 0) / totalAttempts).toFixed(1)
+    : '0';
+  const passCount = results.filter(r => r.score / r.total >= 0.5).length;
+  const passRate = totalAttempts > 0 ? Math.round(passCount / totalAttempts * 100) : 0;
+
+  document.getElementById('dash-total-attempts').textContent = totalAttempts;
+  document.getElementById('dash-unique-students').textContent = uniqueStudents;
+  document.getElementById('dash-avg-score').textContent = avgScore;
+  document.getElementById('dash-pass-rate').textContent = passRate + '%';
+
+  // === HISTOGRAM (score distribution) ===
+  const buckets = Array(13).fill(0); // 0..12
+  results.forEach(r => { buckets[r.score]++; });
+  const maxBucket = Math.max(...buckets, 1);
+
+  const histHtml = buckets.map((c, i) => {
+    const pct = (c / maxBucket * 100);
+    const heightPx = pct > 0 ? Math.max(3, pct * 1.7) : 3;
+    return `
+      <div class="hist-bar-wrap">
+        <div class="hist-bar" style="height:${heightPx}px;" title="${i} điểm: ${c} lượt">
+          ${c > 0 ? `<span class="count">${c}</span>` : ''}
+        </div>
+        <div class="hist-label">${i}</div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('histogram').innerHTML = histHtml;
+
+  // === QUESTIONS WITH HIGHEST WRONG RATE ===
+  const qStats = {};
+  results.forEach(r => {
+    (r.answers || []).forEach(a => {
+      if (!qStats[a.qid]) qStats[a.qid] = { total: 0, wrong: 0 };
+      qStats[a.qid].total++;
+      if (!a.isRight) qStats[a.qid].wrong++;
+    });
+  });
+
+  const qStatsArr = Object.entries(qStats)
+    .filter(([, s]) => s.total >= 1)
+    .map(([qid, s]) => {
+      const q = QUESTIONS_POOL.find(qq => qq.id === qid);
+      return {
+        qid,
+        q,
+        total: s.total,
+        wrong: s.wrong,
+        rate: s.wrong / s.total,
+      };
+    })
+    .filter(x => x.q)
+    .sort((a, b) => b.rate - a.rate)
+    .slice(0, 10);
+
+  const qStatsEl = document.getElementById('qstats-list');
+  if (qStatsArr.length === 0) {
+    qStatsEl.innerHTML = '<div class="empty-lb">Chưa có dữ liệu</div>';
+  } else {
+    const letters = ['A', 'B', 'C', 'D'];
+    qStatsEl.innerHTML = qStatsArr.map((x, i) => {
+      const ratePct = Math.round(x.rate * 100);
+      const cls = ratePct >= 60 ? 'high' : ratePct >= 35 ? 'mid' : 'low';
+      const slotName = x.q.slot_name || x.q.topic;
+      const slotInfo = x.q.slot ? `Câu ${x.q.slot} (${x.q.level})` : '';
+      return `
+        <div class="qstat-item">
+          <div class="qstat-header">
+            <div class="qstat-q">${escapeHtml(x.q.q)}</div>
+            <div class="qstat-rate ${cls}">${ratePct}% sai</div>
+          </div>
+          <div class="qstat-bar">
+            <div class="qstat-bar-fill ${cls}" style="width:${ratePct}%"></div>
+          </div>
+          <div class="qstat-meta">
+            <span class="topic">${slotInfo ? slotInfo + ' · ' : ''}${escapeHtml(slotName)} · Đáp án: ${letters[x.q.ans]}</span>
+            <span>${x.wrong}/${x.total} lượt sai</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // === STUDENT LIST ===
+  const byStudent = {};
+  results.forEach(r => {
+    const key = r.name.toLowerCase().trim();
+    if (!byStudent[key]) {
+      byStudent[key] = {
+        name: r.name,
+        attempts: 0,
+        bestScore: 0,
+        avgScore: 0,
+        scoreSum: 0,
+        bestTime: Infinity,
+        lastDate: 0,
+      };
+    }
+    const s = byStudent[key];
+    s.attempts++;
+    s.scoreSum += r.score;
+    if (r.score > s.bestScore) {
+      s.bestScore = r.score;
+      s.bestTime = r.timeSec;
+    } else if (r.score === s.bestScore && r.timeSec < s.bestTime) {
+      s.bestTime = r.timeSec;
+    }
+    if (r.date > s.lastDate) s.lastDate = r.date;
+  });
+
+  Object.values(byStudent).forEach(s => {
+    s.avgScore = (s.scoreSum / s.attempts).toFixed(1);
+  });
+
+  const studentsArr = Object.values(byStudent).sort((a, b) => {
+    if (b.bestScore !== a.bestScore) return b.bestScore - a.bestScore;
+    return a.bestTime - b.bestTime;
+  });
+
+  const studentsEl = document.getElementById('students-list');
+  if (studentsArr.length === 0) {
+    studentsEl.innerHTML = '<div class="empty-lb">Chưa có học sinh nào làm bài</div>';
+  } else {
+    studentsEl.innerHTML = `
+      <div style="overflow-x:auto;">
+      <table class="students-table">
+        <thead>
+          <tr>
+            <th style="width:40px;">#</th>
+            <th>Họ và tên</th>
+            <th class="num">Số lượt</th>
+            <th class="num">Điểm cao nhất</th>
+            <th class="num">Điểm TB</th>
+            <th class="num">Thời gian</th>
+            <th>Lần cuối</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${studentsArr.map((s, i) => {
+            const best = s.bestScore;
+            const cls = best >= 10 ? 'green' : best >= 8 ? 'amber' : 'red';
+            const d = new Date(s.lastDate);
+            return `
+              <tr>
+                <td class="num">${i+1}</td>
+                <td class="name-cell">${escapeHtml(s.name)}</td>
+                <td class="num">${s.attempts}</td>
+                <td class="score ${cls}">${best}/12</td>
+                <td class="num">${s.avgScore}</td>
+                <td class="num">${formatTime(s.bestTime)}</td>
+                <td>${d.toLocaleString('vi-VN', {dateStyle:'short', timeStyle:'short'})}</td>
+              </tr>
+            `;
+          }).join('')}
+        </tbody>
+      </table>
+      </div>
+    `;
+  }
+}
+
+document.getElementById('btn-dash-refresh').addEventListener('click', refreshDashboard);
+document.getElementById('btn-dash-home').addEventListener('click', () => showScreen('screen-home'));
+
+// ============= INIT =============
+initHome();
+checkAdminAccess();
+
+</script>
+
+</body>
+</html>
